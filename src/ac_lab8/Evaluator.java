@@ -23,6 +23,8 @@ public class Evaluator {
                 String[] elses = elseCondition.split("\\?");
                 for(int j=1; j<elses.length;j++){
                     String ifCondition = elses[0]; //if condition
+                    String x = "\\";
+                    String newx = x + operator();
                     String[] ev = ifCondition.split("\\<");//find evaluator expression ie <
                     System.out.println("IF:" + ev[0] + " < " + ev[1]);
                     
@@ -35,28 +37,13 @@ public class Evaluator {
             System.out.println("ELSE: "+ finalElse);
 
     }
-        
-    public void populate(String input){
-        String[] component = input.split("\\:");
-            int n = component.length-1;
-            
-            for(int i = 0; i< n;i++){
-                String elseCondition = component[i];
-                String[] elses = elseCondition.split("\\?");
-                for(int j=1;j<elses.length;j++){
-                    xT.add("?"); //becomes new parent node
-                    String ifCondition = elses[0]; //if condition, left child
-                    String[] ev = ifCondition.split("\\<");//find evaluator expression ie <
-                    xT.add("<");
-                    String then = elses[1]; //right(middle) child
-                    String[] op = then.split("\\+");//find operator ie +
-                    xT.add("+");
-                }
-            }
-            String finalElse = component[n]; //is rightmost branch, directly under root
-            xT.add(":");
-    }
+      
+     public char operator(){
+         return '+' | '-' | '*' | '/';
+     }
+   
     
+       
      public char[] expression(String input) { //evaluates numerical expression sans parenthases
         char[] charA = input.toCharArray();
         return charA;

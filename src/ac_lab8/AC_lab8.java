@@ -39,6 +39,10 @@ public class AC_lab8 {
         
          String grade = "(x>=90)?A:(x >= 80)?B: (x >= 70)?C:(x>-60)?D:F";
 //         ev.parse(grade);
+        String one = "1";
+        char two = '+' | '-' | '*' | '/';
+        String newString = one + two;
+        System.out.println(newString);
         
     }
     
