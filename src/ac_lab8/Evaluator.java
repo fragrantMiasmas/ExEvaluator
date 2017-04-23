@@ -11,37 +11,63 @@ package ac_lab8;
  */
 public class Evaluator {
        
-    
-    public String parse(String input){ //example input: "(x < 4) ? (y + 2) : 7"
-        StringBuilder sb = new StringBuilder();
-                  
+    ExTree xT = new ExTree();
+       
+     public void parse(String input){ //example input: "(x < 4) ? (y + 2) : 7"
+
             String[] component = input.split("\\:");
             int n = component.length-1;
             
             for(int i = 0; i< n;i++){
                 String elseCondition = component[i];
-
                 String[] elses = elseCondition.split("\\?");
-                for(int j=1;j<elses.length;j++){
+                for(int j=1; j<elses.length;j++){
                     String ifCondition = elses[0]; //if condition
-                    System.out.println("IF: " + ifCondition);
+                    String[] ev = ifCondition.split("\\<");//find evaluator expression ie <
+                    System.out.println("IF:" + ev[0] + " < " + ev[1]);
+                    
                     String then = elses[1];
-                    System.out.println("Then =  " + then);
+                    String[] op = then.split("\\+");//find operator ie +
+                    System.out.println("THEN: " + op[0] + " + " + op[1]);
                 }
             }
-            String finalElse = component[n];
-            System.out.println("Else condition is "+ finalElse);
-       
-        return sb.toString();
+            String finalElse = component[n]; 
+            System.out.println("ELSE: "+ finalElse);
+
+    }
+        
+    public void populate(String input){
+        String[] component = input.split("\\:");
+            int n = component.length-1;
+            
+            for(int i = 0; i< n;i++){
+                String elseCondition = component[i];
+                String[] elses = elseCondition.split("\\?");
+                for(int j=1;j<elses.length;j++){
+                    xT.add("?"); //becomes new parent node
+                    String ifCondition = elses[0]; //if condition, left child
+                    String[] ev = ifCondition.split("\\<");//find evaluator expression ie <
+                    xT.add("<");
+                    String then = elses[1]; //right(middle) child
+                    String[] op = then.split("\\+");//find operator ie +
+                    xT.add("+");
+                }
+            }
+            String finalElse = component[n]; //is rightmost branch, directly under root
+            xT.add(":");
     }
     
-    public char[] expression(String input) { //evaluates numerical expression sans parenthases
+     public char[] expression(String input) { //evaluates numerical expression sans parenthases
         char[] charA = input.toCharArray();
         return charA;
     }
     
     public boolean isInt(char i){
         return (int)i >= 48 && (int)i<=57;
+    }
+    
+    public boolean isVar(char i){
+        return (int)i >= 48 && (int)i<=57; //change later
     }
     public boolean isOperator(char op)
     {
@@ -55,14 +81,6 @@ public class Evaluator {
      
     public boolean isEvaluator(char eval){
         return eval == '?' || eval == ':';
-    }
-    
-    public void makeTree(){
-        
-    }
-    
-    public void inorder(){
-        
     }
     
      public int char2int(char input) { //char to ascii
@@ -85,12 +103,5 @@ public class Evaluator {
             return (char) (i + 55); //returns a letter
         }
     }
-    
-    public void op2int(char i){
-        
-    }
-    
-    public void int2op(){
-        
-    }
+  
 }

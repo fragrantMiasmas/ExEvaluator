@@ -14,7 +14,7 @@ public class ExTree {
     
     Node root;
 //    HashMap<Integer, Node> hm1 = new HashMap<Integer, Node>();
-    HashMap<Character, Node> hm = new HashMap<Character, Node>();
+    HashMap<String, Node> hm = new HashMap<String, Node>();
     
     public ExTree(){
         
@@ -23,16 +23,30 @@ public class ExTree {
     public ExTree(Node root, char op){
         hm.put(root.op, root);
     }
-    
-    public ExTree(int item){
+        
+    public void add(String pinfo){
+        Node parent = hm.get(pinfo);
+        Node leftc = parent.lc;
+        Node middlec = parent.mc;
+        Node rightc = parent.rc;
+        
+        hm.put(pinfo, root);
+        
+        if(parent.mc == null){
+            parent.mc = middlec;
+        }
+        else if(parent.lc == null && parent.mc != null){
+            parent.lc = leftc;
+        }
+        else if(parent.lc != null && parent.rc == null && parent.mc != null){
+            parent.rc = rightc;
+        }
         
     }
     
-    public void add(char pinfo){
-        Node parent = hm.get(pinfo);
-        Node curr = parent.lc;
+    public void inorder(){
+        
     }
-    
     public boolean isEmpty() {
         return root == null;
     }

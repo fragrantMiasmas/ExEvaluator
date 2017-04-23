@@ -12,23 +12,27 @@ package ac_lab8;
 public class Node {
     
     Node lc;
+    Node mc;
     Node rc;
+    String op;
     int item;
-    char op;
-    
-    public Node(int item, Node lc, Node rc){
-        this.lc = null;
-        this.rc = null;
-        this.item = item;
-    }
-    
-    public Node(char op, Node lc, Node rc){
+//    char op;
+      
+    public Node(String op, Node lc, Node rc){ //binary
         this.lc = null;
         this.rc = null;
         this.op = op;
     }
     
-    Node mynode = new Node(item, lc, rc){
-        
+    public Node(String op, Node lc, Node mc, Node rc){ //ternary conditional
+        this.lc = null;
+        this.mc = null;
+        this.rc = null;
+        this.op = op;
     }
+    
+    
+//    Node mynode = new Node(item, lc, rc){
+//        
+//    }
 }

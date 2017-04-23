@@ -27,8 +27,8 @@ public class AC_lab8 {
         int a = 1;
         int b = 2;
         int max = (a > b) ? a : b;
-        System.out.println("max = " + max);
-        System.out.println("xy = " + xy);
+//        System.out.println("max = " + max);
+//        System.out.println("xy = " + xy);
         
         System.out.println("");
         String grade1 = (x >= 90) ? "A"
@@ -38,7 +38,7 @@ public class AC_lab8 {
         : "F";
         
          String grade = "(x>=90)?A:(x >= 80)?B: (x >= 70)?C:(x>-60)?D:F";
-         ev.parse(grade);
+//         ev.parse(grade);
         
     }
     
