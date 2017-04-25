@@ -12,6 +12,7 @@ package ac_lab8;
 public class Operator extends Expression{
     
     String wholeString; //whole operation inlcuding var and lit
+    String print;
     String operation;
     Expression ex;
     Expression var;
@@ -36,31 +37,36 @@ public class Operator extends Expression{
         operation = op;
         var = variable1;
         lit = variable2;
-        wholeString = variable1.varName +  op + variable2.varName;
+        answer = findAnswer(op,variable1.val,variable2.val);
+        print = variable1.varName +  op + variable2.varName;
+        wholeString = variable1.varName +  op + variable2.varName + "=" + answer;
     }
     
     public Operator(String op, Var variable1, Lit lit1){
         operation = op;
         var = variable1;
         lit = lit1;
-        wholeString = variable1.varName +  op + lit1.value;
+        answer = findAnswer(op, variable1.val, lit1.theValue);
+        print = variable1.varName +  op + lit1.value;
+        wholeString = variable1.varName +  op + lit1.value + "=" + answer;
     }
     
-//    public int findAnswer(String op, Var variable1, Lit lit1){
-//        int ans = 0;
-//        switch(op){
-//            case "+": ans = variable1.val + lit1.theValue;
-//                break;
-//            case "-": ans = variable1.val - lit1.theValue;
-//                break;
-//            case "*": ans = variable1.val * lit1.theValue;
-//                break;
-//            case "/": ans = variable1.val / lit1.theValue;
-//                break;
-//            case "%": ans = variable1.val % lit1.theValue;
-//        }
-//        return ans;        
-//    }
+    public int findAnswer(String op, int int1, int int2){
+        int ans = 0;
+        switch(op){
+            case "+": ans = int1 + int2;
+                break;
+            case "-": ans = int1 - int2;;
+                break;
+            case "*": ans = int1 * int2;
+                break;
+            case "/": ans = int1 / int2;
+                break;
+            case "%": ans = int1 % int2;
+                break;
+        }
+        return ans;        
+    }
        
 //similar to binary expression, may get rid of binary    
     public static Operator makeOperator(String op, Expression ex1){ //ie (y+2)

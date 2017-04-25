@@ -17,22 +17,18 @@ public class AC_lab8 {
     public static void main(String[] args) {
         Parser ev = new Parser();
 //        cond.expr = "(x<4)?(y+2):7";
-
-      
         //output    
-
         Lit l1 = new Lit("3");
-        Lit l2 = new Lit("5");
+        Lit l2 = new Lit("4");
+        Lit l3 = new Lit("5");
         Plus p1 = new Plus(l1, l2);
         Mult m1 = new Mult(l1,l1);
-        Expression example = new Expression(p1.wholeString);
+        Expression example = new Expression(p1.print);
         System.out.println("Expression: " + example.expr);
         
-        Expression ex2 = new Expression(m1.wholeString);
-        System.out.println("Expression " + ex2.expr + example.expr);
+        Expression ex2 = new Expression(m1.print);
         
         Expression ex = new Plus(l1,l2);
-//        System.out.println("ex = " + ex.toString());
         
         //lab 9 portion
 //        cond.Express(cond);

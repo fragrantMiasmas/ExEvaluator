@@ -13,6 +13,7 @@ public class Expression {
     
     String expr; //the expression, can be user input
     Expression ex; 
+    int answer;
     
     public Expression(){
         

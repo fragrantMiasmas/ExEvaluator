@@ -11,11 +11,12 @@ package ac_lab8;
  */
 public class Evaluator extends Expression{
     
-    String wholeString; //whole operation inlcuding var and lit
+    String wholeString; //whole operation inlcuding var and lit and answer
+    String print;
     String operator;
     Expression var;
     Expression lit;
-    boolean isTrue;
+    boolean answer; //true or false
     
     public Evaluator(){
         
@@ -40,6 +41,24 @@ public class Evaluator extends Expression{
 //        lit = lit1;
 //        wholeString = variable1.varName +  op + lit1.value;
 //    }
+    
+    public boolean findAnswer(String op, int int1, int int2){      
+        switch(op){
+            case ">": answer = int1 > int2;
+                break;
+            case "<": answer = int1 < int2;;
+                break;
+            case ">=": answer = int1 >= int2;
+                break;
+            case "<=": answer = int1 <= int2;
+                break;
+            case "=": answer = int1 == int2;
+                break;
+            case "!=": answer = int1 != int2;
+                break;
+        }
+        return answer;        
+    }
     
     public static Evaluator makeEvaluator(String ex, Expression ex1){ //ie (x<4)
         String input = ex1.expr;
