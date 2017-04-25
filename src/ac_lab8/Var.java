@@ -12,22 +12,21 @@ package ac_lab8;
  */
 public class Var extends Expression{
     
+    Expression ex;
     String varName;
+    int val;
     
     public Var(){
         
     }
     
-    public Var(String var){
+    public Var(String var){ //ex x, y, a, b
         varName = var;
     }
     
-    public Var(Bin bin1){
-        varName = bin1.var.toString();
-    }
-    
     public Var(Expression ex1){
-        varName = ex1.expr;
+        ex = ex1;
+        varName = ex.expr;
     }
     
 }

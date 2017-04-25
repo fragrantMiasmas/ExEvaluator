@@ -10,31 +10,22 @@ package ac_lab8;
  * @author ElizabethReed PC
  */
 public class Lit extends Expression {
-
+    Expression ex; //parent
     int theValue;
-
+    String value;
+    
     public Lit() {
 
     }
-
-    public Lit(Expression ex) {
-
-    }
     
-    public Lit(Bin bin1) {
-         theValue = Integer.parseInt(bin1.lit.toString());
+    public Lit(String number) {
+         value = number;
+         theValue = Integer.parseInt(number);
     }
-    
-    public Lit(Tern tern1) {
-         theValue = Integer.parseInt(tern1.elsesub.toString());
-    }
-
-    public int valueOf() {
-        return theValue;
-    }
-
-    public String toString() {
-        return "" + theValue;
+     
+     public Lit(int number) {
+         theValue = number;
+         //need toString
     }
 
 }
