@@ -51,6 +51,23 @@ public class Operator extends Expression{
         wholeString = variable1.varName +  op + lit1.value + "=" + answer;
     }
     
+    public Operator(String op, Lit lit1, Lit lit2){
+        operation = op;
+        var = lit1;
+        lit = lit2;
+        answer = findAnswer(op, lit1.theValue, lit2.theValue);
+        print = lit1.value +  op + lit2.value;
+        wholeString = lit1.value +  op + lit2.value + "=" + answer;
+    }
+    
+    public Operator(String op, int lit1, int lit2){
+        operation = op;
+        var = new Lit(lit1);
+        lit = new Lit (lit2);
+        answer = findAnswer(op, lit1, lit2);
+        print = lit1 +  op + lit2;
+        wholeString = lit1 +  op + lit2 + "=" + answer;
+    }
     public int findAnswer(String op, int int1, int int2){
         int ans = 0;
         switch(op){

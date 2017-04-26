@@ -16,19 +16,17 @@ public class AC_lab8 {
      */
     public static void main(String[] args) {
         Parser ev = new Parser();
-//        cond.expr = "(x<4)?(y+2):7";
-        //output    
-        Lit l1 = new Lit("3");
-        Lit l2 = new Lit("4");
-        Lit l3 = new Lit("5");
-        Plus p1 = new Plus(l1, l2);
-        Mult m1 = new Mult(l1,l1);
-        Expression example = new Expression(p1.print);
-        System.out.println("Expression: " + example.expr);
+        //output                 
+        Lit literal1 = new Lit("3");
+        Lit literal2 = new Lit("4");
+        Operator op1 = new Operator("*",literal1,literal2);
+        Operator minus = new Operator("-");
+        Operator op3 = new Operator("+", new Lit("2"), new Lit("6"));
         
-        Expression ex2 = new Expression(m1.print);
+        Expression ex2 = new Expression(op1, minus, op3);
+        System.out.println(ex2.expr);
+        System.out.println(ex2.answer);
         
-        Expression ex = new Plus(l1,l2);
         
         //lab 9 portion
 //        cond.Express(cond);

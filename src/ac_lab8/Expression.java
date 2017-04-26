@@ -13,15 +13,22 @@ public class Expression {
     
     String expr; //the expression, can be user input
     Expression ex; 
+    Lit lit1;
     int answer;
+    
     
     public Expression(){
         
     }
+    
+    public Expression(Lit literal1){
+        lit1 = literal1;
+    }
         
     public Expression(Operator op1){ //+,-,*,/
         ex = op1;
-        expr = op1.operation;
+        expr = op1.wholeString;
+        answer = op1.answer;
     }
     
     public Expression(Evaluator ev1){ //=, !=, <,> etc
@@ -30,15 +37,11 @@ public class Expression {
     }
     
     //add two operators with lit and var attached
-    public Expression(Operator op1, Operator op2, Operator op3){ //=, !=, <,> etc
-        expr = op1.wholeString + op2.operation + op3.wholeString;
+    public Expression(Operator op1, Operator op2, Operator op3){ //concat any operators together
+        expr = op1.print + op2.operation + op3.print;
+        answer = new Operator(op2.operation,op1.answer,op3.answer).answer;
     }
-    
-    public Expression(Plus p1){
-        ex = p1;
-        expr = p1.wholeString;
-    }
-    
+   
     public Expression(String user_input){ //direct input, counts for all operators
         expr = user_input;
     }       
