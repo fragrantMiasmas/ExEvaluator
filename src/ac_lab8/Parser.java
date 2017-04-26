@@ -10,6 +10,9 @@ package ac_lab8;
  * @author ElizabethReed PC
  */
 public class Parser {
+    
+    Queue output = new Queue();
+    Stack opStack = new Stack();
        
      public void parse(String input){ //example input: "(x < 4) ? (y + 2) : 7"
 
@@ -22,7 +25,7 @@ public class Parser {
                 for(int j=1; j<elses.length;j++){
                     String ifCondition = elses[0]; //if condition
                     String x = "\\";
-                    String newx = x + operator();
+                    String splitter = x + operator();
                     String[] ev = ifCondition.split("\\<");//find evaluator expression ie <
                     System.out.println("IF:" + ev[0] + " < " + ev[1]);
                     
@@ -36,16 +39,34 @@ public class Parser {
 
     }
     
+     public void postOrder(Expression input){
+         output.enq(input.left);
+         System.out.println(input.left.answer);
+         opStack.add(input); //add operation and operator string
+         output.enq(input.right);
+         Expression opString = opStack.remove();
+         output.enq(opString);
+         System.out.println(input.right.answer);
+         System.out.println(input.operation);
+     }
+     
+      public void postOrder2(Expression input){
+         output.enq(input.left);
+         opStack.add(input); //add operator
+          System.out.println(input.operation);
+         output.enq(input.right);
+         Expression opString = opStack.remove();
+         output.enq(opString); 
+         
+         //print everything on output q
+         while(!output.isEmpty()){
+             System.out.println(output.deq().answer);
+        }
+     }
      public char operator(){
          return '+' | '-' | '*' | '/';
      }
    
-    
-       
-     public char[] expression(String input) { //evaluates numerical expression sans parenthases
-        char[] charA = input.toCharArray();
-        return charA;
-    }
     
     public boolean isInt(char i){
         return (int)i >= 48 && (int)i<=57;
@@ -55,12 +76,7 @@ public class Parser {
         //upper and lower case letters
         return ((int)i >= 65 && (int)i<=90) || ((int)i >= 97 && (int)i<=122); 
     }
-    public boolean isOperator(char op)
-    {
-        // * 42, + 43, - 45, /47
-        return op == '+' || op == '-' || op == '*' || op == '/';
-    }
-    
+        
      public boolean isCondition(String con)
     {
         return con == ">" || con == "<" || con == ">=" || con == "<=" || con == "==" || con == "!=";

@@ -11,8 +11,9 @@ package ac_lab8;
  */
 public class Tern extends Expression{
     
-    String questionMark;
-    String colon;
+    String wholeString;
+    String questionMark = "?";
+    String colon = ":";
     Expression ifsub; //main condition with ? mark
     Expression thensub;
     Expression elsesub;
@@ -21,23 +22,24 @@ public class Tern extends Expression{
         
     }
     
-    public Tern(String q, Expression ex1, Expression ex2, Expression ex3){
-        questionMark = q;
+    public Tern(Expression ex1, Expression ex2, Expression ex3){
         ifsub = ex1;
         thensub = ex2;
         elsesub = ex3;
+        wholeString = ifsub.print + questionMark + thensub.print + colon + elsesub.print;
     }
     
-     public Tern(String q, Expression ex1, Expression ex2, String c, Expression ex3){
-        questionMark = q;
-        ifsub = ex1;
-        thensub = ex2;
-        colon = c;
-        elsesub = ex3;
-    }
+//     public Tern(String q, Expression ex1, Expression ex2, String c, Expression ex3){
+//        questionMark = q;
+//        ifsub = ex1;
+//        thensub = ex2;
+//        colon = c;
+//        elsesub = ex3;
+//        wholeString = ifsub + q + thensub + c + elsesub;
+//    }
      
      public static Tern makeTern(Expression user){ //example input: "(x < 4) ? (y + 2) : 7"
-           String input = user.expr;
+           String input = user.wholeString;
            
            String[] ifelse = input.split("\\:");
            String[] conditions = ifelse[0].split("\\?");
@@ -49,7 +51,7 @@ public class Tern extends Expression{
                Expression ifCondition = new Expression(ifsub);
                Expression thenCondition = new Expression(thensub);
                Expression elseCondition = new Expression(elsesub);
-               Tern tern1 = new Tern("?", ifCondition, thenCondition, ":", elseCondition);
+               Tern tern1 = new Tern(ifCondition, thenCondition, elseCondition);
 //            }
             return tern1;
         }

@@ -17,20 +17,34 @@ public class AC_lab8 {
     public static void main(String[] args) {
         Parser ev = new Parser();
         //output                 
-        Lit literal1 = new Lit("3");
-        Lit literal2 = new Lit("4");
-        Operator op1 = new Operator("*",literal1,literal2);
-        Operator minus = new Operator("-");
-        Operator op3 = new Operator("+", new Lit("2"), new Lit("6"));
+        Expression literal1 = new Expression(new Lit("3"));
+        Expression literal2 = new Expression(new  Lit("4"));
+        Expression literal3 = new Expression(new Lit("2"));
+        Expression literal4 = new Expression(new  Lit("5"));
         
-        Expression ex2 = new Expression(op1, minus, op3);
-        System.out.println(ex2.expr);
-        System.out.println(ex2.answer);
+        Expression plus = new Expression(new Operator("+"));
+        Expression minus = new Expression(new Operator("-"));
+        Expression mult = new Expression(new Operator("*"));
+        Expression div = new Expression(new Operator("/"));
         
+//        Expression variable1 = new Expression(new Var("x"));
+        Expression op1 = new Expression(new Operator(mult,literal1,literal2));
+        Expression op4 = new Expression(new Operator(minus, literal3, literal4));
+
+        Expression e2 = new Expression(op1,plus,op4);
+        System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
         
         //lab 9 portion
-//        cond.Express(cond);
-//        cond.Express2(cond);
+        Operator op5 = new Operator(plus, literal3, literal4);
+        Operator op2 = new Operator(plus, literal1, literal2); 
+        Expression a = new Expression(op2);
+        Expression b = new Expression(op5);
+        
+        Expression out = new Expression(a, mult, b);
+        System.out.println(out.wholeString + " = " + out.answer);
+        
+
+
 //        String ex = "(3*(5&(1>0)))";
 //        int x = 1;
 //        int y = 8;

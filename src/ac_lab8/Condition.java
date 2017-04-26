@@ -24,6 +24,7 @@ public class Condition extends Tern{
     public Condition(Evaluator ev1, Expression ex, Lit lit1){ //"(x < 4) ? (y + 2) : 7"
         eval = ev1;  //(x < 4)
         literal = lit1; //7
+        wholeString = ev1.wholeString + q + ex.wholeString + c + lit1.wholeString;
     }
     
     public Condition(Evaluator ev1, Expression ex, Expression ex2){ //"(x < 4) ? (y + 2) : 7"

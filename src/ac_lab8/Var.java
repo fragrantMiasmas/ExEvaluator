@@ -22,11 +22,13 @@ public class Var extends Expression{
     
     public Var(String var){ //ex x, y, a, b
         varName = var;
+        val = hm.put(var, val);
     }
     
     public Var(Expression ex1){
         ex = ex1;
-        varName = ex.expr;
+        varName = ex.wholeString;
+        val = hm.put(varName, val);
     }
     
 }

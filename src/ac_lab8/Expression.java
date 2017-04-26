@@ -5,47 +5,79 @@
  */
 package ac_lab8;
 
+import java.util.HashMap;
+
 /**
  *
  * @author ElizabethReed PC
  */
 public class Expression {
-    
-    String expr; //the expression, can be user input
-    Expression ex; 
-    Lit lit1;
+
+    HashMap<String, Integer> hm = new HashMap<String, Integer>();
+    String wholeString; //the expression, can be user input
+    String print;
+    String operation;
+    Expression left;
+    Expression right;
     int answer;
-    
-    
-    public Expression(){
-        
+
+    Expression next;
+
+    public Expression() {
+
     }
-    
-    public Expression(Lit literal1){
-        lit1 = literal1;
+
+    public Expression(String user_input) { //direct input, counts for all operators
+        wholeString = user_input;
     }
-        
-    public Expression(Operator op1){ //+,-,*,/
-        ex = op1;
-        expr = op1.wholeString;
+
+    public Expression(Lit literal1) {
+        answer = literal1.theValue;
+        wholeString = literal1.value;
+    }
+
+    public Expression(Var var1) {
+        answer = hm.get(var1.val);
+        wholeString = var1.varName;
+    }
+
+    public Expression(Operator op1) { //+,-,*,/
+        left = op1.left;
+        right = op1.right;
+        operation = op1.operation;
+        wholeString = op1.wholeString;
         answer = op1.answer;
     }
-    
-    public Expression(Evaluator ev1){ //=, !=, <,> etc
-        ex = ev1;
-        expr = ev1.operator;
+
+    public Expression(Evaluator ev1) { //=, !=, <,> etc
+        left = ev1.left;
+        right = ev1.right;
+        operation = ev1.operation;
+        wholeString = ev1.wholeString;
+        answer = ev1.answer;
     }
-    
+
+    public Expression(Tern t1) {
+        print = t1.print;
+        wholeString = t1.wholeString;
+    }
+
     //add two operators with lit and var attached
-    public Expression(Operator op1, Operator op2, Operator op3){ //concat any operators together
-        expr = op1.print + op2.operation + op3.print;
-        answer = new Operator(op2.operation,op1.answer,op3.answer).answer;
+    public Expression(Operator op1, Expression ex2, Operator op3) { //concat any operators together
+        operation = ex2.operation;
+        wholeString = op1.print + ex2.operation + op3.print;
+//        answer = new Operator(ex2,op1.answer,op3.answer).answer;
+        answer = new Operator(ex2, op1, op3).answer; //debug
     }
-   
-    public Expression(String user_input){ //direct input, counts for all operators
-        expr = user_input;
-    }       
- 
+
+    public Expression(Expression ex1, Expression ex2, Expression ex3) { //concat any operators together
+        left = ex1;
+        right = ex3;
+        operation = ex2.operation;
+        wholeString = ex1.wholeString + operation + ex3.wholeString;
+        answer = new Operator(ex2, ex1, ex3).answer;
+    }
+
     //conditional statements inorder alternative
 //    public void Express(Expression user){ //takes in whole expression
 //        String input = user.expr; //example input: "(x < 4) ? (y + 2) : 7"
