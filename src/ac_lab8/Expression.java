@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Expression {
 
-    HashMap<String, Integer> hm = new HashMap<String, Integer>();
+//    HashMap<String, Integer> hm = new HashMap<String, Integer>();
     String wholeString; //the expression, can be user input
     String print;
     String operation;
@@ -37,8 +37,13 @@ public class Expression {
     }
 
     public Expression(Var var1) {
-        answer = hm.get(var1.val);
+        answer = var1.val;
         wholeString = var1.varName;
+    }
+    
+    public Expression(Set set1){
+        answer = set1.value;
+        wholeString = set1.varName + " = " + set1.value;
     }
 
     public Expression(Operator op1) { //+,-,*,/

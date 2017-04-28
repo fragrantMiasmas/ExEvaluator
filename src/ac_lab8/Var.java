@@ -12,6 +12,8 @@ package ac_lab8;
  */
 public class Var extends Expression{
     
+    Set setter = new Set();
+    
     Expression ex;
     String varName;
     int val;
@@ -22,13 +24,19 @@ public class Var extends Expression{
     
     public Var(String var){ //ex x, y, a, b
         varName = var;
-        val = hm.put(var, val);
+        val = setter.hm.get(var);
+    }
+    
+    public Var(Set setter){ //ex x, y, a, b
+        varName = setter.varName;
+        val = 0;
+        val = setter.hm.get(varName);
     }
     
     public Var(Expression ex1){
         ex = ex1;
         varName = ex.wholeString;
-        val = hm.put(varName, val);
+        val = setter.hm.get(varName);
     }
     
 }

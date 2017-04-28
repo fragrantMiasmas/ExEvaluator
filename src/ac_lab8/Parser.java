@@ -38,18 +38,22 @@ public class Parser {
             System.out.println("ELSE: "+ finalElse);
 
     }
-    
-     public void postOrder(Expression input){
+     
+      public void postOrder(Expression input){
+          //
          output.enq(input.left);
-         System.out.println(input.left.answer);
-         opStack.add(input); //add operation and operator string
+         opStack.add(input); //add operator
+         //
          output.enq(input.right);
          Expression opString = opStack.remove();
-         output.enq(opString);
-         System.out.println(input.right.answer);
-         System.out.println(input.operation);
+         output.enq(opString); 
+         
+         //print everything on output q
+         while(!output.isEmpty()){
+             System.out.println(output.deq().answer);
+        }
      }
-     
+      
       public void postOrder2(Expression input){
          output.enq(input.left);
          opStack.add(input); //add operator

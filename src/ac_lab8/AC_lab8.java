@@ -15,8 +15,7 @@ public class AC_lab8 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Parser ev = new Parser();
-        //output                 
+        Parser ev = new Parser();               
         Expression literal1 = new Expression(new Lit("3"));
         Expression literal2 = new Expression(new  Lit("4"));
         Expression literal3 = new Expression(new Lit("2"));
@@ -27,22 +26,26 @@ public class AC_lab8 {
         Expression mult = new Expression(new Operator("*"));
         Expression div = new Expression(new Operator("/"));
         
-//        Expression variable1 = new Expression(new Var("x"));
-        Expression op1 = new Expression(new Operator(mult,literal1,literal2));
+        Set setter = new Set("x", 6);
+        Expression var1 = new Expression(new Var(setter));
+        System.out.println("var " + var1.wholeString + "=" + var1.answer);
+        Expression op1 = new Expression(new Operator(mult,var1,literal2));   
         Expression op4 = new Expression(new Operator(minus, literal3, literal4));
 
         Expression e2 = new Expression(op1,plus,op4);
-        System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
-        
-        //lab 9 portion
+     
         Operator op5 = new Operator(plus, literal3, literal4);
-        Operator op2 = new Operator(plus, literal1, literal2); 
+        Operator op2 = new Operator(plus, literal1, var1); 
         Expression a = new Expression(op2);
         Expression b = new Expression(op5);
         
         Expression out = new Expression(a, mult, b);
+        //output  
+        System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
         System.out.println(out.wholeString + " = " + out.answer);
         
+        //lab 9 portion
+//        ev.postOrder2(out);
 
 
 //        String ex = "(3*(5&(1>0)))";
