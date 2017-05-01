@@ -13,6 +13,7 @@ public class Lit extends Expression {
     Expression ex; //parent
     int theValue;
     String value;
+    String rootPrint;
     Lit next; //for shunting yard algorithm
     
     public Lit() {
@@ -26,7 +27,7 @@ public class Lit extends Expression {
      
      public Lit(int number) {
          theValue = number;
-         //need toString
+         rootPrint = Integer.toString(theValue);
     }
 
 }

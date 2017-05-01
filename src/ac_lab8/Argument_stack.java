@@ -9,20 +9,16 @@ package ac_lab8;
  *
  * @author ElizabethReed PC
  */
-public class Stack {
-    
+public class Argument_stack {
     Expression top;
     
-    public Stack(){
+    public Argument_stack(){
         
     }
-    
-     public boolean isEmpty() {
-        return top == null;
-    }
-     
+         
     public void add(Expression op1) {
-//        Expression node2 = new Expression(op);
+//        Expression node2 = new Expression(op1);
+        op1.next = top;
         top = op1;
     }
     
@@ -30,5 +26,13 @@ public class Stack {
         Expression pop = top;
         top = top.next;
         return pop;
+    }
+    
+    public boolean isEmpty() {
+        return top == null;
+    }
+    
+    public boolean hasNext() {
+        return top.next != null;
     }
 }

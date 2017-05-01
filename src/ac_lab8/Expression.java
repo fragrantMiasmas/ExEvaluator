@@ -13,12 +13,13 @@ import java.util.HashMap;
  */
 public class Expression {
 
-//    HashMap<String, Integer> hm = new HashMap<String, Integer>();
     String wholeString; //the expression, can be user input
-    String print;
     String operation;
+    String rootPrint;
+    Expression root;
     Expression left;
     Expression right;
+    Expression parent;
     int answer;
 
     Expression next;
@@ -34,10 +35,13 @@ public class Expression {
     public Expression(Lit literal1) {
         answer = literal1.theValue;
         wholeString = literal1.value;
+        rootPrint = literal1.value;
     }
 
     public Expression(Var var1) {
+
         answer = var1.val;
+        rootPrint = var1.varName;
         wholeString = var1.varName;
     }
     
@@ -47,42 +51,71 @@ public class Expression {
     }
 
     public Expression(Operator op1) { //+,-,*,/
+
+        root = op1;
         left = op1.left;
         right = op1.right;
+        rootPrint = op1.operation;
         operation = op1.operation;
         wholeString = op1.wholeString;
         answer = op1.answer;
     }
 
     public Expression(Evaluator ev1) { //=, !=, <,> etc
+
+        root = ev1;
         left = ev1.left;
         right = ev1.right;
+        rootPrint = ev1.operation;
         operation = ev1.operation;
         wholeString = ev1.wholeString;
         answer = ev1.answer;
     }
 
     public Expression(Tern t1) {
-        print = t1.print;
+        answer = t1.answer;   
         wholeString = t1.wholeString;
     }
 
     //add two operators with lit and var attached
     public Expression(Operator op1, Expression ex2, Operator op3) { //concat any operators together
+
+        root = op1;
         operation = ex2.operation;
+        rootPrint = ex2.operation;
         wholeString = op1.print + ex2.operation + op3.print;
-//        answer = new Operator(ex2,op1.answer,op3.answer).answer;
         answer = new Operator(ex2, op1, op3).answer; //debug
     }
 
     public Expression(Expression ex1, Expression ex2, Expression ex3) { //concat any operators together
+ 
+        root = ex2; //just the operation
         left = ex1;
         right = ex3;
+        rootPrint = ex2.operation;
         operation = ex2.operation;
         wholeString = ex1.wholeString + operation + ex3.wholeString;
         answer = new Operator(ex2, ex1, ex3).answer;
     }
-
+    
+    public boolean hasLeft(Expression exp){
+        return exp.left !=null;
+    }
+    
+    public boolean hasRight(Expression exp){
+        return exp.right !=null;
+    }
+    
+    public boolean isInt(String str) {
+        char i = str.charAt(0);
+        return (int) i >= 48 && (int) i <= 57;
+    }
+       public boolean isVar(String str) {
+        char i = str.charAt(0);
+        //upper and lower case letters
+        return ((int) i >= 65 && (int) i <= 90) || ((int) i >= 97 && (int) i <= 122);        
+    }
+    
     //conditional statements inorder alternative
 //    public void Express(Expression user){ //takes in whole expression
 //        String input = user.expr; //example input: "(x < 4) ? (y + 2) : 7"

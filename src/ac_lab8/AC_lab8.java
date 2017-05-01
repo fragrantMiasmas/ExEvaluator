@@ -32,20 +32,31 @@ public class AC_lab8 {
         Expression op1 = new Expression(new Operator(mult,var1,literal2));   
         Expression op4 = new Expression(new Operator(minus, literal3, literal4));
 
-        Expression e2 = new Expression(op1,plus,op4);
+        Evaluator ev1 = new Evaluator(">", var1, literal3);
+        Expression eval = new Expression(ev1);
+        Expression e2 = new Expression(op1,plus,op4); //use for lab 9
      
-        Operator op5 = new Operator(plus, literal3, literal4);
+        Operator op5 = new Operator(mult, literal3, literal4);
         Operator op2 = new Operator(plus, literal1, var1); 
         Expression a = new Expression(op2);
         Expression b = new Expression(op5);
         
-        Expression out = new Expression(a, mult, b);
+        Tern t1 = new Tern(eval, op1, op4);
+        
+        Expression ternary1 = new Expression(t1);
+        Expression out = new Expression(a, plus, b); //use for lab9
+        
         //output  
+        System.out.println("Ternary = " + ternary1.wholeString + "=" + ternary1.answer);
+        System.out.println("ev = " + ev1.wholeString + "=" + ev1.answer);
         System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
         System.out.println(out.wholeString + " = " + out.answer);
         
         //lab 9 portion
-//        ev.postOrder2(out);
+        Expression lab9 = new Expression("3+x+2*5"); //direct string output
+        ev.traverse(out);
+
+//        ev.parse(ternary1.wholeString);
 
 
 //        String ex = "(3*(5&(1>0)))";

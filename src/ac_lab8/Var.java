@@ -16,6 +16,7 @@ public class Var extends Expression{
     
     Expression ex;
     String varName;
+    String rootPrint;
     int val;
     
     public Var(){
@@ -25,18 +26,21 @@ public class Var extends Expression{
     public Var(String var){ //ex x, y, a, b
         varName = var;
         val = setter.hm.get(var);
+        rootPrint = Integer.toString(val);
     }
-    
+        
     public Var(Set setter){ //ex x, y, a, b
         varName = setter.varName;
         val = 0;
         val = setter.hm.get(varName);
+        rootPrint = Integer.toString(val);
     }
     
     public Var(Expression ex1){
         ex = ex1;
         varName = ex.wholeString;
         val = setter.hm.get(varName);
+        rootPrint = Integer.toString(val);
     }
     
 }
