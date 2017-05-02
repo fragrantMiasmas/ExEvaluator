@@ -11,67 +11,40 @@ package ac_lab8;
  */
 public class Parser {
 
-    Argument_stack output = new Argument_stack();
+    Argument_stack argStack = new Argument_stack();
     Operator_stack opStack = new Operator_stack();
     Tern ternary = new Tern();
-    
-    
-    public void String2Tree(Expression express){ //expression as a string input
-        String str = express.wholeString; //extract string from expression
-//        String[] component = str.split("\\:");
-//        int n = component.length - 1;
-        char[] charA = new char[str.length()];
-        for(int i = 0; i < str.length(); i++){
-            char curr = str.charAt(i);
-            Expression currEx = new Expression("" + curr); //new expression
-            if(isOperator(curr)){
-                opStack.add(currEx);
-            }
-        }
-    }
-
-     public boolean isOperator(char i){
-        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/';
-    }
         
-    public void traverse(Expression input) {
+    public void String2Tree(Expression express){ //expression as a string input
         StringBuilder sb = new StringBuilder();
-        Expression curr = input;
-        while (curr !=null) {
-            
-            if(curr.isInt(curr.rootPrint) || curr.isVar(curr.rootPrint)) 
-                output.add(curr); //if node is an int, goes straight to output
+        String str = express.wholeString;
+        for(int i = 0; i < str.length(); i++){
+            char curr = str.charAt(i); 
+            Expression currEx = new Expression("" + curr); //new expression
+            if(isOperator(curr))  
+                opStack.add(currEx);
             else
-                opStack.add(curr); //if node is an operation, goes to operator stack
-         
-            if(curr.hasRight(curr)){ //move to next node
-                curr = curr.right;
-                traverse(curr);
-            }   
-            else
-                break;
-            if(curr.hasLeft(curr)){ //move to next node
-                curr = curr.left;
-                traverse(curr);
-            }   
-            else
-                break;
+                argStack.add(currEx);
         }
-        while(!opStack.isEmpty()){ //transfer operations to output
-            curr =  opStack.remove();
-            output.add(curr);
-//            curr = curr.next;
+        //when string iteration is done, stacks are created
+         while(!opStack.isEmpty()){ //transfer operations to output
+            Expression curr = opStack.remove();
+            curr.right = argStack.remove();
+            curr.left = argStack.remove();
+            argStack.add(curr); 
+            //below works
+            String component = curr.left.wholeString + curr.wholeString + curr.right.wholeString;
+            sb.append(component);
+             System.out.println("sb = " + sb);
         }
-
-        while(!output.isEmpty()){
-            curr =  output.remove();
-            sb.append(curr.rootPrint);
-        }
-         System.out.println(sb);
     }
-    
-   public void parse(String input) { //example input: "(x < 4) ? (y + 2) : 7"
 
+    public boolean isOperator(char i){
+        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
+    }  
+    
+   public void parse(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
+        String input = expr.wholeString;
         String[] component = input.split("\\:");
         int n = component.length - 1;
 

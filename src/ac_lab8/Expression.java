@@ -27,9 +27,21 @@ public class Expression {
     public Expression() {
 
     }
+    
+    public Expression(Expression expr) { //expression calls itself fr stack of expressions
+        root = expr;
+        left = expr.left;
+        right = expr.right;
+//        wholeString = expr.left.wholeString + expr.right.wholeString;
+        answer = expr.answer;
+    }
 
     public Expression(String user_input) { //direct input, counts for all operators
         wholeString = user_input;
+        left = new Expression();
+        right = new Expression();
+//        wholeString = left.wholeString + user_input + right.wholeString;
+//        String printTree = left.wholeString + user_input + right.wholeString;
     }
 
     public Expression(Lit literal1) {

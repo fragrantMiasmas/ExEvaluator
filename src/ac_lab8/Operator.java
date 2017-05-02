@@ -28,6 +28,7 @@ public class Operator extends Expression{
     public Operator(String op){ //direct input
         operation = op;
         root = new Expression(op);
+        wholeString = op;
     }
     
     public Operator(Expression op, Expression ex1, Expression ex2){ //genreic

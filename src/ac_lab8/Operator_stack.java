@@ -26,7 +26,8 @@ public class Operator_stack {
     }
      
     public void add(Expression op1) {
-//        Expression node2 = new Expression(op);
+//        Expression node2 = new Expression(op1);
+        op1.next = top;
         top = op1;
     }
     

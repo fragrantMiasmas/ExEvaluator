@@ -47,14 +47,15 @@ public class AC_lab8 {
         Expression out = new Expression(a, plus, b); //use for lab9
         
         //output  
-        System.out.println("Ternary = " + ternary1.wholeString + "=" + ternary1.answer);
-        System.out.println("ev = " + ev1.wholeString + "=" + ev1.answer);
-        System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
-        System.out.println(out.wholeString + " = " + out.answer);
+//        System.out.println("Ternary = " + ternary1.wholeString + "=" + ternary1.answer);
+//        System.out.println("ev = " + ev1.wholeString + "=" + ev1.answer);
+//        System.out.println("Expression = " + e2.wholeString + "=" + e2.answer);
+//        System.out.println(out.wholeString + " = " + out.answer);
         
         //lab 9 portion
         Expression lab9 = new Expression("3+x+2*5"); //direct string output
-        ev.traverse(out);
+        System.out.println("lab 9 string: " + lab9.wholeString);
+        ev.String2Tree(lab9);
 
 //        ev.parse(ternary1.wholeString);
 
