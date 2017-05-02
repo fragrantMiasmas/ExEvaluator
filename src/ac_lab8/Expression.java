@@ -32,16 +32,13 @@ public class Expression {
         root = expr;
         left = expr.left;
         right = expr.right;
-//        wholeString = expr.left.wholeString + expr.right.wholeString;
+        wholeString = expr.left.wholeString + expr.operation + expr.right.wholeString;
         answer = expr.answer;
     }
 
     public Expression(String user_input) { //direct input, counts for all operators
         wholeString = user_input;
-        left = new Expression();
-        right = new Expression();
-//        wholeString = left.wholeString + user_input + right.wholeString;
-//        String printTree = left.wholeString + user_input + right.wholeString;
+        operation = user_input;
     }
 
     public Expression(Lit literal1) {

@@ -15,6 +15,10 @@ public class Parser {
     Operator_stack opStack = new Operator_stack();
     Tern ternary = new Tern();
         
+    public boolean isOperator(char i){
+        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
+    }  
+    
     public void String2Tree(Expression express){ //expression as a string input
         StringBuilder sb = new StringBuilder();
         String str = express.wholeString;
@@ -33,16 +37,40 @@ public class Parser {
             curr.left = argStack.remove();
             argStack.add(curr); 
             //below works
+//             System.out.println(curr.wholeString);
             String component = curr.left.wholeString + curr.wholeString + curr.right.wholeString;
             sb.append(component);
              System.out.println("sb = " + sb);
         }
     }
-
-    public boolean isOperator(char i){
-        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
-    }  
     
+    public void printTree(Expression express){ //expression as a string input
+        StringBuilder sb = new StringBuilder();
+        String str = express.wholeString;
+        for(int i = 0; i < str.length(); i++){
+            char curr = str.charAt(i); 
+            Expression currEx = new Expression("" + curr); //new expression
+            if(isOperator(curr))  
+                opStack.add(currEx);
+            else
+                argStack.add(currEx);
+        }
+        //when string iteration is done, stacks are created
+         while(!opStack.isEmpty()){ //transfer operations to output
+            Expression curr = opStack.remove();
+            curr.right = argStack.remove();
+            curr.left = argStack.remove();
+            Expression subtree = new Expression(curr.left, curr,curr.right);
+            argStack.add(subtree); 
+            //below works
+            String component = subtree.wholeString;            
+            if(opStack.isEmpty()){
+                sb.append(component);
+            }
+        }
+         System.out.println("StringBuilder = " + sb);
+    }
+
    public void parse(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
         String input = expr.wholeString;
         String[] component = input.split("\\:");

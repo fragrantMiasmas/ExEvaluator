@@ -54,8 +54,9 @@ public class AC_lab8 {
         
         //lab 9 portion
         Expression lab9 = new Expression("3+x+2*5"); //direct string output
-        System.out.println("lab 9 string: " + lab9.wholeString);
-        ev.String2Tree(lab9);
+        Expression example = new Expression("3+x+2*5*7"); //direct string output
+        System.out.println("lab 9 string: " + example.wholeString);
+        ev.printTree(example);
 
 //        ev.parse(ternary1.wholeString);
 
@@ -85,12 +86,7 @@ public class AC_lab8 {
 //        String one = "1";
 //        char two = '+' | '-' | '*' | '/';
 //        String newString = one + two;
-//        System.out.println(newString);
-
-//          Expression myExpr = new PlusExpr( new MultExpr( new VarExpr("x"), new LitExpr(3)),
-//                                new PlusExpr( new LitExpr(5), new SetExpr("x", new LitExpr(7))));
-
-                
+//        System.out.println(newString);                
     }
     
 }
