@@ -22,23 +22,56 @@ public class Parser {
         opOrder.put("-", 0);
         opOrder.put("/", 1);
         opOrder.put("*", 1);
+        opOrder.put("<", 2);
+        opOrder.put(">", 2);
     }
         
     public boolean isOperator(char i){
         return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
-    }  
-      
-   public void printTree(Expression express){ //expression as a string input
+    }    
+    public void tokenizer(Expression currEx) {
+        order(); //set hashmap
+
+        if (opStack.isEmpty()) {
+//            opStack.add(new Expression("("));
+            opStack.add(currEx);
+        } else { //if stack is not empty
+            int current = opOrder.get(currEx.wholeString); //get operator precedence
+            String temp = opStack.top.wholeString;
+            int previous = opOrder.get(temp); //operator of prev
+
+            if (opStack.hasLeft() || current > previous) { //or has lower precedence)
+                opStack.add(currEx);
+            } else if (current < previous) { //if previous operator is higher precedence
+                Expression prev = opStack.remove();
+                prev.right = argStack.remove();
+                prev.left = argStack.remove();
+                Expression subtree = new Expression(prev.left, prev, prev.right);
+                argStack.add(subtree);
+                
+                opStack.add(currEx);
+            } else if (current == previous) {
+                opStack.add(currEx);
+            }
+
+        }
+    }
+   
+    public void printTree(Expression express){ //expression as a string input
         StringBuilder sb = new StringBuilder();
         String str = express.wholeString;
         for(int i = 0; i < str.length(); i++){
             char curr = str.charAt(i); 
             Expression currEx = new Expression("" + curr); //new expression
             if(isOperator(curr)){
-                opStack.add(currEx);
+                tokenizer(currEx);
             }  
-            else
-                argStack.add(currEx);
+            else{
+                //must parse int
+                int toInt = Integer.parseInt(currEx.wholeString);
+                Expression intEx = new Expression(toInt);
+                argStack.add(intEx);
+            }     
         }
         
         //when string iteration is done, subtree expressions are created
@@ -47,17 +80,19 @@ public class Parser {
             curr.right = argStack.remove();
             curr.left = argStack.remove();
             Expression subtree = new Expression(curr.left, curr,curr.right);
+//            System.out.println(subtree.answer); //for debugging
             argStack.add(subtree); 
+                        
             //below works
             String component = subtree.wholeString;            
             if(opStack.isEmpty()){
                 sb.append(component + " = " + subtree.answer);
             }
         }
-         System.out.println("StringBuilder = " + sb);
+         System.out.println("Tree = " + sb);
     }
-
-   public void parse(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
+    
+    public void parse(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
         String input = expr.wholeString;
         String[] component = input.split("\\:");
         int n = component.length - 1;
@@ -82,82 +117,36 @@ public class Parser {
         System.out.println("ELSE: " + finalElse);
 
     }
-   
-    public void precedence(Expression currEx) {
-        order(); //set hashmap
-
-        if (opStack.isEmpty()) {
-            opStack.add(currEx);
-        } else { //if stack is not empty
-            int current = opOrder.get(currEx.wholeString); //get operator precedence
-            String temp = opStack.top.wholeString;
-            int previous = opOrder.get(temp); //operator of prev
-
-            if (opStack.hasLeft() || current > previous) { //or has lower precedence)
-                opStack.add(currEx);
-            } else if (current < previous) { //if previous operator is higher precedence
-                Expression prev = opStack.remove();
-                prev.right = argStack.remove();
-                prev.left = argStack.remove();
-                Expression subtree = new Expression(prev.left, prev, prev.right);
-                argStack.add(subtree);
-                opStack.add(currEx);
-            } else if (current == previous) {
-                opStack.add(currEx);
-            }
-
-        }
-    }
-   
-   public void printTree2(Expression express){ //expression as a string input
-        StringBuilder sb = new StringBuilder();
-        String str = express.wholeString;
-        for(int i = 0; i < str.length(); i++){
-            char curr = str.charAt(i); 
-            Expression currEx = new Expression("" + curr); //new expression
-            if(isOperator(curr)){
-                precedence(currEx);
-//                opStack.add(currEx);
-            }  
-            else
-                argStack.add(currEx);
-        }
-        
-        //when string iteration is done, subtree expressions are created
-         while(!opStack.isEmpty()){ //transfer operations to output
-            Expression curr = opStack.remove();
-            curr.right = argStack.remove();
-            curr.left = argStack.remove();
-            Expression subtree = new Expression(curr.left, curr,curr.right);
-            argStack.add(subtree); 
-            //below works
-            String component = subtree.wholeString;            
-            if(opStack.isEmpty()){
-                sb.append(component + " = " + subtree.answer);
-            }
-        }
-         System.out.println("StringBuilder = " + sb);
-    }
-   
-//    public int char2int(char input) { //char to ascii
-//
-//        int digit = (int) input;
-//        if (digit >= 48 && digit <= 57) {
-//            digit = digit - 48; //only accounts for digits 0-9
-//        } else if (digit >= 65 && digit <= 90) {
-//            digit = digit - 55; //capitol letters
-//        } else {
-//            System.out.println("Out of range!");
-//        }
-//        return digit;
+    //conditional statements inorder alternative
+//    public void Express(Expression user){ //takes in whole expression
+//        String input = user.expr; //example input: "(x < 4) ? (y + 2) : 7"
+//        String mult = "x";
+//        String lessthan = "<";
+//        
+//        Tern ternEx = Tern.makeTern(user);
+//        String ifCondition = ternEx.ifsub.expr;
+//        String thenCondition = ternEx.thensub.expr;
+//        String elseCondition = ternEx.elsesub.expr;
+//        
+//        Expression ex1 = new Expression(ifCondition);
+//        Expression ex2 = new Expression(thenCondition);
+//        Expression ex3 = new Expression(elseCondition);
+//        
+//        Evaluator eval1 = Evaluator.makeEvaluator(lessthan,ex1);
+//        Operator op1 = Operator.makeOperator(mult,ex2);
+//        
+//        Expression variable = eval1.var;
+//        Expression variable2 = op1.var;
+//        
+//        Var var1 = new Var(variable);
+//        Var var2 = new Var(variable2);
+//        
+//        Expression literal1 = eval1.lit;
+//        Expression literal2 = op1.lit;
+//        
+//        Lit lit1 = new Lit(literal1);
+//        Lit lit2 = new Lit(literal2);
+//        Lit finalElse = new Lit(ex3);   
+//        
 //    }
-//    
-//    public char int2char(int i) {
-//        if (i >= 0 && i <= 9) {
-//            return (char) (i + 48); //returns digits 0-9
-//        } else {
-//            return (char) (i + 55); //returns a letter
-//        }
-//    }
-
 }

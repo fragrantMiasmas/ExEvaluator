@@ -19,7 +19,6 @@ public class Expression {
     Expression root;
     Expression left;
     Expression right;
-    Expression parent;
     int answer;
 
     Expression next;
@@ -39,6 +38,11 @@ public class Expression {
     public Expression(String user_input) { //direct input, counts for all operators
         wholeString = user_input;
         operation = user_input;
+    }
+    
+    public Expression(int user_input) { //direct input, counts for all operators
+        wholeString = "" + user_input;
+        answer = user_input;
     }
 
     public Expression(Lit literal1) {
@@ -93,7 +97,8 @@ public class Expression {
         operation = ex2.operation;
         rootPrint = ex2.operation;
         wholeString = op1.print + ex2.operation + op3.print;
-        answer = new Operator(ex2, op1, op3).answer; //debug
+        Operator newop = new Operator(ex2, op1, op3); //debug
+        answer = newop.answer;
     }
 
     public Expression(Expression ex1, Expression ex2, Expression ex3) { //concat any operators together
@@ -104,57 +109,8 @@ public class Expression {
         rootPrint = ex2.operation;
         operation = ex2.operation;
         wholeString = "(" + ex1.wholeString + operation + ex3.wholeString + ")";
-        answer = new Operator(ex2, ex1, ex3).answer; //debug
+//        wholeString = ex1.wholeString + operation + ex3.wholeString;
+        Operator newop = new Operator(ex2, ex1, ex3);
+        answer = newop.answer; //debug
     }
-    
-    public boolean hasLeft(Expression exp){
-        return exp.left !=null;
-    }
-    
-    public boolean hasRight(Expression exp){
-        return exp.right !=null;
-    }
-    
-    public boolean isInt(String str) {
-        char i = str.charAt(0);
-        return (int) i >= 48 && (int) i <= 57;
-    }
-       public boolean isVar(String str) {
-        char i = str.charAt(0);
-        //upper and lower case letters
-        return ((int) i >= 65 && (int) i <= 90) || ((int) i >= 97 && (int) i <= 122);        
-    }
-    
-    //conditional statements inorder alternative
-//    public void Express(Expression user){ //takes in whole expression
-//        String input = user.expr; //example input: "(x < 4) ? (y + 2) : 7"
-//        String mult = "x";
-//        String lessthan = "<";
-//        
-//        Tern ternEx = Tern.makeTern(user);
-//        String ifCondition = ternEx.ifsub.expr;
-//        String thenCondition = ternEx.thensub.expr;
-//        String elseCondition = ternEx.elsesub.expr;
-//        
-//        Expression ex1 = new Expression(ifCondition);
-//        Expression ex2 = new Expression(thenCondition);
-//        Expression ex3 = new Expression(elseCondition);
-//        
-//        Evaluator eval1 = Evaluator.makeEvaluator(lessthan,ex1);
-//        Operator op1 = Operator.makeOperator(mult,ex2);
-//        
-//        Expression variable = eval1.var;
-//        Expression variable2 = op1.var;
-//        
-//        Var var1 = new Var(variable);
-//        Var var2 = new Var(variable2);
-//        
-//        Expression literal1 = eval1.lit;
-//        Expression literal2 = op1.lit;
-//        
-//        Lit lit1 = new Lit(literal1);
-//        Lit lit2 = new Lit(literal2);
-//        Lit finalElse = new Lit(ex3);   
-//        
-//    }
 }

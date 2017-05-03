@@ -78,21 +78,4 @@ public class Operator extends Expression{
         }
         return ans;        
     }
-       
-//similar to binary expression, may get rid of binary    
-//    public static Operator makeOperator(String op, Expression ex1){ //ie (y+2)
-//        String input = ex1.expr;
-//           
-//           String splitter = "\\" + op;
-//           String[] component = input.split("\\+"); //ie op = +
-//           String var1 = component[0];
-//           String lit1 = component[1];
-//           
-//           Var varEx = new Var(var1);
-//           Lit litEx = new Lit(lit1);
-//           
-//           Operator op1 = new Operator(op, varEx, litEx); //change later to include general case
-//           return op1;
-//    }    
-//    
 }
