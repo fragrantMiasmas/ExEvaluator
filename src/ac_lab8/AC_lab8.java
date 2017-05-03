@@ -54,11 +54,9 @@ public class AC_lab8 {
         
         //lab 9 portion
         Expression lab9 = new Expression("3+x+2*5"); //direct string output
-        Expression example = new Expression("3+x+2*5*7"); //direct string output
+        Expression example = new Expression("3+x+2*5+7"); //direct string output
         System.out.println("lab 9 string: " + example.wholeString);
-        ev.printTree(example);
-
-//        ev.parse(ternary1.wholeString);
+        ev.printTree2(example);
 
 
 //        String ex = "(3*(5&(1>0)))";

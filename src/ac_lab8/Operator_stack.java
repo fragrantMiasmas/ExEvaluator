@@ -16,7 +16,10 @@ public class Operator_stack {
     public Operator_stack(){
         
     }
-    
+    public boolean hasLeft(){ //has left parenthases
+        //edit later
+        return top.wholeString == "(";
+    }
     public boolean isEmpty() {
         return top == null;
     }

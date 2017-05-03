@@ -103,8 +103,8 @@ public class Expression {
         right = ex3;
         rootPrint = ex2.operation;
         operation = ex2.operation;
-        wholeString = ex1.wholeString + operation + ex3.wholeString;
-        answer = new Operator(ex2, ex1, ex3).answer;
+        wholeString = "(" + ex1.wholeString + operation + ex3.wholeString + ")";
+        answer = new Operator(ex2, ex1, ex3).answer; //debug
     }
     
     public boolean hasLeft(Expression exp){

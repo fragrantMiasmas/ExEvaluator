@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package ac_lab8;
+import java.util.*;
 
 /**
  *
@@ -13,49 +14,34 @@ public class Parser {
 
     Argument_stack argStack = new Argument_stack();
     Operator_stack opStack = new Operator_stack();
+    HashMap<String, Integer> opOrder = new HashMap<String, Integer>();
     Tern ternary = new Tern();
+    
+    public void order(){
+        opOrder.put("+", 0); //where higher values mean higher precedence
+        opOrder.put("-", 0);
+        opOrder.put("/", 1);
+        opOrder.put("*", 1);
+    }
         
     public boolean isOperator(char i){
         return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
     }  
-    
-    public void String2Tree(Expression express){ //expression as a string input
+      
+   public void printTree(Expression express){ //expression as a string input
         StringBuilder sb = new StringBuilder();
         String str = express.wholeString;
         for(int i = 0; i < str.length(); i++){
             char curr = str.charAt(i); 
             Expression currEx = new Expression("" + curr); //new expression
-            if(isOperator(curr))  
+            if(isOperator(curr)){
                 opStack.add(currEx);
+            }  
             else
                 argStack.add(currEx);
         }
-        //when string iteration is done, stacks are created
-         while(!opStack.isEmpty()){ //transfer operations to output
-            Expression curr = opStack.remove();
-            curr.right = argStack.remove();
-            curr.left = argStack.remove();
-            argStack.add(curr); 
-            //below works
-//             System.out.println(curr.wholeString);
-            String component = curr.left.wholeString + curr.wholeString + curr.right.wholeString;
-            sb.append(component);
-             System.out.println("sb = " + sb);
-        }
-    }
-    
-    public void printTree(Expression express){ //expression as a string input
-        StringBuilder sb = new StringBuilder();
-        String str = express.wholeString;
-        for(int i = 0; i < str.length(); i++){
-            char curr = str.charAt(i); 
-            Expression currEx = new Expression("" + curr); //new expression
-            if(isOperator(curr))  
-                opStack.add(currEx);
-            else
-                argStack.add(currEx);
-        }
-        //when string iteration is done, stacks are created
+        
+        //when string iteration is done, subtree expressions are created
          while(!opStack.isEmpty()){ //transfer operations to output
             Expression curr = opStack.remove();
             curr.right = argStack.remove();
@@ -65,7 +51,7 @@ public class Parser {
             //below works
             String component = subtree.wholeString;            
             if(opStack.isEmpty()){
-                sb.append(component);
+                sb.append(component + " = " + subtree.answer);
             }
         }
          System.out.println("StringBuilder = " + sb);
@@ -96,6 +82,63 @@ public class Parser {
         System.out.println("ELSE: " + finalElse);
 
     }
+   
+    public void precedence(Expression currEx) {
+        order(); //set hashmap
+
+        if (opStack.isEmpty()) {
+            opStack.add(currEx);
+        } else { //if stack is not empty
+            int current = opOrder.get(currEx.wholeString); //get operator precedence
+            String temp = opStack.top.wholeString;
+            int previous = opOrder.get(temp); //operator of prev
+
+            if (opStack.hasLeft() || current > previous) { //or has lower precedence)
+                opStack.add(currEx);
+            } else if (current < previous) { //if previous operator is higher precedence
+                Expression prev = opStack.remove();
+                prev.right = argStack.remove();
+                prev.left = argStack.remove();
+                Expression subtree = new Expression(prev.left, prev, prev.right);
+                argStack.add(subtree);
+                opStack.add(currEx);
+            } else if (current == previous) {
+                opStack.add(currEx);
+            }
+
+        }
+    }
+   
+   public void printTree2(Expression express){ //expression as a string input
+        StringBuilder sb = new StringBuilder();
+        String str = express.wholeString;
+        for(int i = 0; i < str.length(); i++){
+            char curr = str.charAt(i); 
+            Expression currEx = new Expression("" + curr); //new expression
+            if(isOperator(curr)){
+                precedence(currEx);
+//                opStack.add(currEx);
+            }  
+            else
+                argStack.add(currEx);
+        }
+        
+        //when string iteration is done, subtree expressions are created
+         while(!opStack.isEmpty()){ //transfer operations to output
+            Expression curr = opStack.remove();
+            curr.right = argStack.remove();
+            curr.left = argStack.remove();
+            Expression subtree = new Expression(curr.left, curr,curr.right);
+            argStack.add(subtree); 
+            //below works
+            String component = subtree.wholeString;            
+            if(opStack.isEmpty()){
+                sb.append(component + " = " + subtree.answer);
+            }
+        }
+         System.out.println("StringBuilder = " + sb);
+    }
+   
 //    public int char2int(char input) { //char to ascii
 //
 //        int digit = (int) input;
