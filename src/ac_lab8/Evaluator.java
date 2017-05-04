@@ -25,7 +25,7 @@ public class Evaluator extends Expression{
     }
     
     public int bool2int(boolean tf){
-        int boolval= 0;
+        int boolval;
         if(tf)
             boolval =1;
         else

@@ -110,14 +110,14 @@ public class Expression {
         operation = ex2.operation;
         wholeString = "(" + ex1.wholeString + operation + ex3.wholeString + ")";
 //        wholeString = ex1.wholeString + operation + ex3.wholeString; 
-        if(operation != ">" && operation != "<"){
+        if(operation.contentEquals(">")|| operation.contains("<")){
+             Evaluator newev = new Evaluator(ex2, ex1, ex3);
+            answer = newev.answer; //debug
+        }
+        else{            
             System.out.println("operation = " + operation);
             Operator newop = new Operator(ex2, ex1, ex3);
             answer = newop.answer; //debug
-        }
-        else{
-            Evaluator newev = new Evaluator(ex2, ex1, ex3);
-            answer = newev.answer; //debug
         }
            
     }

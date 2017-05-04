@@ -25,16 +25,25 @@ public class Parser {
         opOrder.put("&", 1);
         opOrder.put("<", 2);
         opOrder.put(">", 2);
+        opOrder.put("<=", 2);
+        opOrder.put(">=", 2);
     }
         
     public boolean isOperator(char i){
-        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='&';
+        return i == '=' || i == '+' || i == '-' || i == '*' || i=='&' ||i== '/' || i == '>' || i == '<';
     }    
+    
+//    public boolean isEvaluator(char i){
+//       return i== '/' || i == '>' || i == '<';
+//    }
+//    public boolean isOperator2(String i){
+//        return i == "=" || i == "+" || i == "-" || i == "*" || i== "/" || i == ">" || i == "<" || i=="&";
+//    }    
+    
     public void tokenizer(Expression currEx) {
         order(); //set hashmap
 
         if (opStack.isEmpty()) {
-//            opStack.add(new Expression("("));
             opStack.add(currEx);
         } else { //if stack is not empty
             int current = opOrder.get(currEx.wholeString); //get operator precedence
@@ -58,19 +67,25 @@ public class Parser {
         }
     }
    
-    public void printTree(Expression express){ //expression as a string input
-        StringBuilder sb = new StringBuilder();
-        String str = express.wholeString;
-        for(int i = 0; i < str.length(); i++){
-            char curr = str.charAt(i); 
-            Expression currEx = new Expression("" + curr); //new expression
-            if(isOperator(curr)){
+     public void printTree(String str){ //expression as a string input
+        
+        StringBuilder sb = new StringBuilder();      
+        String[] user_input = str.split("\\s"); //split by spaces
+    
+        for(int i = 0; i < user_input.length; i++){
+            String curr = user_input[i]; 
+            Expression currEx = new Expression(curr); //new expression
+            if(isOperator(curr.charAt(0)))
                 tokenizer(currEx);
-            }  
+            else if(curr.charAt(0) =='r' || curr.charAt(0) =='R'){ //doesn't match strings??
+                Read reader = new Read();
+                currEx.answer = reader.answer;
+                Expression readin = new Expression(reader.answer);
+                argStack.add(readin);
+            }
             else{
-                //must parse int
-                int toInt = Integer.parseInt(currEx.wholeString);
-                Expression intEx = new Expression(toInt);
+//                int toInt = Integer.parseInt(currEx.wholeString);
+                Expression intEx = new Expression(Integer.parseInt(currEx.wholeString));
                 argStack.add(intEx);
             }     
         }
@@ -83,8 +98,7 @@ public class Parser {
             Expression subtree = new Expression(curr.left, curr,curr.right);
 //            System.out.println(subtree.answer); //for debugging
             argStack.add(subtree); 
-                        
-            //below works
+
             String component = subtree.wholeString;            
             if(opStack.isEmpty()){
                 sb.append(component + " = " + subtree.answer);
@@ -93,10 +107,9 @@ public class Parser {
          System.out.println("Tree = " + sb);
     }
  
-    public void parse(Expression expr){ //only three parts 
+    public void parseCondition(String input){ //only three parts 
         
         //example input: "(x < 4) ? (y + 2) : 7"
-        String input = expr.wholeString;
         String[] component = input.split("\\:");
   
         //split (x < 4) ? (y + 2)
@@ -107,34 +120,6 @@ public class Parser {
         Expression finalElse = new Expression(component[1]);
         
         Tern t1 = new Tern(ifCondition,elseCondition,finalElse);
-     
-        System.out.println("answer = " + t1.answer);
-        System.out.println("Conditional: " + t1.wholeString);
-    }
-    
-//     public void parse2(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
-//        String input = expr.wholeString;
-//        String[] component = input.split("\\:");
-//        int n = component.length - 1;
-//
-//        for (int i = 0; i < n; i++) {
-//            String elseCondition = component[i];
-//            String[] elses = elseCondition.split("\\?");
-//            for (int j = 1; j < elses.length; j++) {
-//                String ifCondition = elses[0]; //if condition
-//                String x = "\\";
-//                String splitter = x + ternary.operation;
-//                String[] ev = ifCondition.split(splitter);//find evaluator expression ie <
-//                System.out.println("IF:" + ev[0] + ternary.operation + ev[1]);
-//
-//                String then = elses[1];
-//                String split2 = x + ternary.elsesub.operation;
-//                String[] op = then.split("\\+");//find operator ie +
-//                System.out.println("THEN: " + op[0] + " + " + op[1]);
-//            }
-//        }
-//        String finalElse = component[n];
-//        System.out.println("ELSE: " + finalElse);
-//
-//    }
+        System.out.println("Conditional: " + t1.wholeString + "=" + t1.answer);
+    }    
 }
