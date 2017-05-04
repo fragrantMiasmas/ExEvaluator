@@ -86,6 +86,7 @@ public class Expression {
     }
 
     public Expression(Tern t1) {
+        operation = t1.operation;
         answer = t1.answer;   
         wholeString = t1.wholeString;
     }
@@ -106,11 +107,18 @@ public class Expression {
         root = ex2; //just the operation
         left = ex1;
         right = ex3;
-        rootPrint = ex2.operation;
         operation = ex2.operation;
         wholeString = "(" + ex1.wholeString + operation + ex3.wholeString + ")";
-//        wholeString = ex1.wholeString + operation + ex3.wholeString;
-        Operator newop = new Operator(ex2, ex1, ex3);
-        answer = newop.answer; //debug
+//        wholeString = ex1.wholeString + operation + ex3.wholeString; 
+        if(operation != ">" && operation != "<"){
+            System.out.println("operation = " + operation);
+            Operator newop = new Operator(ex2, ex1, ex3);
+            answer = newop.answer; //debug
+        }
+        else{
+            Evaluator newev = new Evaluator(ex2, ex1, ex3);
+            answer = newev.answer; //debug
+        }
+           
     }
 }

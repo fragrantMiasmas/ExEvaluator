@@ -54,13 +54,17 @@ public class AC_lab8 {
         //lab 9 portion
         String ex = "3*5&1>0"; //"(3*(5&(1>0)))";
         Expression exx = new Expression(ex);
+        Expression exxx = new Expression("5>1");
         Expression lab9 = new Expression("3+1+2*5"); //direct string output
-        
-        Expression lab = new Expression("2*5"); 
-        Expression example = new Expression("3+x+2*5<7"); //direct string output
-        System.out.println("lab 9 string: " + lab9.wholeString);
-        ev.printTree(lab9);
 
+        Expression example = new Expression("3+x+2*5<7"); //direct string output
+        System.out.println("lab 9 string: " + exxx.wholeString);
+        ev.printTree(exxx);
+        
+        String ex2 = "(x<4)?(y+2):7";
+        Expression rr = new Expression(ex2);
+        ev.parse(rr);
+        
       
 //        int x = 1;
 //        int y = 8;

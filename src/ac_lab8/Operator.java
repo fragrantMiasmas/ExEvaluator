@@ -75,6 +75,8 @@ public class Operator extends Expression{
                 break;
             case "%": ans = int1 % int2;
                 break;
+            case "&": ans = int1 & int2;
+                break;
         }
         return ans;        
     }

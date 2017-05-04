@@ -22,12 +22,13 @@ public class Parser {
         opOrder.put("-", 0);
         opOrder.put("/", 1);
         opOrder.put("*", 1);
+        opOrder.put("&", 1);
         opOrder.put("<", 2);
         opOrder.put(">", 2);
     }
         
     public boolean isOperator(char i){
-        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='=';
+        return i == '=' || i == '+' || i == '-' || i == '*' || i== '/' || i == '>' || i == '<' || i=='&';
     }    
     public void tokenizer(Expression currEx) {
         order(); //set hashmap
@@ -91,62 +92,49 @@ public class Parser {
         }
          System.out.println("Tree = " + sb);
     }
-    
-    public void parse(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
+ 
+    public void parse(Expression expr){ //only three parts 
+        
+        //example input: "(x < 4) ? (y + 2) : 7"
         String input = expr.wholeString;
         String[] component = input.split("\\:");
-        int n = component.length - 1;
-
-        for (int i = 0; i < n; i++) {
-            String elseCondition = component[i];
-            String[] elses = elseCondition.split("\\?");
-            for (int j = 1; j < elses.length; j++) {
-                String ifCondition = elses[0]; //if condition
-                String x = "\\";
-                String splitter = x + ternary.operation;
-                String[] ev = ifCondition.split(splitter);//find evaluator expression ie <
-                System.out.println("IF:" + ev[0] + ternary.operation + ev[1]);
-
-                String then = elses[1];
-                String split2 = x + ternary.elsesub.operation;
-                String[] op = then.split("\\+");//find operator ie +
-                System.out.println("THEN: " + op[0] + " + " + op[1]);
-            }
-        }
-        String finalElse = component[n];
-        System.out.println("ELSE: " + finalElse);
-
+  
+        //split (x < 4) ? (y + 2)
+        String ifelseCondition = component[0];
+        String[] elses = ifelseCondition.split("\\?");
+        Expression ifCondition = new Expression(elses[0]);      
+        Expression elseCondition = new Expression(elses[1]);         
+        Expression finalElse = new Expression(component[1]);
+        
+        Tern t1 = new Tern(ifCondition,elseCondition,finalElse);
+     
+        System.out.println("answer = " + t1.answer);
+        System.out.println("Conditional: " + t1.wholeString);
     }
-    //conditional statements inorder alternative
-//    public void Express(Expression user){ //takes in whole expression
-//        String input = user.expr; //example input: "(x < 4) ? (y + 2) : 7"
-//        String mult = "x";
-//        String lessthan = "<";
-//        
-//        Tern ternEx = Tern.makeTern(user);
-//        String ifCondition = ternEx.ifsub.expr;
-//        String thenCondition = ternEx.thensub.expr;
-//        String elseCondition = ternEx.elsesub.expr;
-//        
-//        Expression ex1 = new Expression(ifCondition);
-//        Expression ex2 = new Expression(thenCondition);
-//        Expression ex3 = new Expression(elseCondition);
-//        
-//        Evaluator eval1 = Evaluator.makeEvaluator(lessthan,ex1);
-//        Operator op1 = Operator.makeOperator(mult,ex2);
-//        
-//        Expression variable = eval1.var;
-//        Expression variable2 = op1.var;
-//        
-//        Var var1 = new Var(variable);
-//        Var var2 = new Var(variable2);
-//        
-//        Expression literal1 = eval1.lit;
-//        Expression literal2 = op1.lit;
-//        
-//        Lit lit1 = new Lit(literal1);
-//        Lit lit2 = new Lit(literal2);
-//        Lit finalElse = new Lit(ex3);   
-//        
+    
+//     public void parse2(Expression expr) { //example input: "(x < 4) ? (y + 2) : 7"
+//        String input = expr.wholeString;
+//        String[] component = input.split("\\:");
+//        int n = component.length - 1;
+//
+//        for (int i = 0; i < n; i++) {
+//            String elseCondition = component[i];
+//            String[] elses = elseCondition.split("\\?");
+//            for (int j = 1; j < elses.length; j++) {
+//                String ifCondition = elses[0]; //if condition
+//                String x = "\\";
+//                String splitter = x + ternary.operation;
+//                String[] ev = ifCondition.split(splitter);//find evaluator expression ie <
+//                System.out.println("IF:" + ev[0] + ternary.operation + ev[1]);
+//
+//                String then = elses[1];
+//                String split2 = x + ternary.elsesub.operation;
+//                String[] op = then.split("\\+");//find operator ie +
+//                System.out.println("THEN: " + op[0] + " + " + op[1]);
+//            }
+//        }
+//        String finalElse = component[n];
+//        System.out.println("ELSE: " + finalElse);
+//
 //    }
 }

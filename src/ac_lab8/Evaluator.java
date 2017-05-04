@@ -32,7 +32,7 @@ public class Evaluator extends Expression{
             boolval = 0;
         return boolval;
     }
-     public Evaluator(String op, Expression ex1, Expression ex2){
+    public Evaluator(String op, Expression ex1, Expression ex2){
         root = new Expression(op);
         operator = op;
         var = ex1;
@@ -40,6 +40,17 @@ public class Evaluator extends Expression{
         trueFalse = findAnswer(op, ex1.answer, ex2.answer);
         answer = bool2int(trueFalse);
         rootPrint = op;
+        wholeString = ex1.wholeString +  op + ex2.wholeString;
+    }
+    
+    public Evaluator(Expression op, Expression ex1, Expression ex2){
+        root = new Expression(op);
+        operator = op.operation;
+        var = ex1;
+        lit = ex2;
+        trueFalse = findAnswer(op.operation, ex1.answer, ex2.answer);
+        answer = bool2int(trueFalse);
+        rootPrint = op.operation;
         wholeString = ex1.wholeString +  op + ex2.wholeString;
     }
     
@@ -77,22 +88,9 @@ public class Evaluator extends Expression{
                 break;
             case "!=": trueFalse = int1 != int2;
                 break;
+//            case "&": trueFalse = int1 & int2;
+//                break;
         }
         return trueFalse;        
     }
-    
-//    public static Evaluator makeEvaluator(String ex, Expression ex1){ //ie (x<4)
-//        String input = ex1.wholeString;
-//           
-//           String splitter = "\\" + ex; //won't accept this... for split
-//           String[] component = input.split("\\<"); //operator
-//           String var = component[0];
-//           String lit = component[1];
-//           
-//           Expression varEx = new Expression(var);
-//           Expression litEx = new Expression(lit);
-//           
-//           Evaluator ev1 = new Evaluator(ex, varEx, litEx); //change later to include general case
-//           return ev1;
-//    }
 }

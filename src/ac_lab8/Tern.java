@@ -46,22 +46,4 @@ public class Tern extends Expression{
         else
             answer = cond2.answer;
     }
-     
-//     public static Tern makeTern(Expression user){ //example input: "(x < 4) ? (y + 2) : 7"
-//           String input = user.wholeString;
-//           
-//           String[] ifelse = input.split("\\:");
-//           String[] conditions = ifelse[0].split("\\?");
-////           for(int i = 0; i< conditions.length; i++){
-//               String ifsub = conditions[0]; //if condition, (x < 4)
-//               String thensub = conditions[1]; //then (y + 2)
-//               String elsesub= ifelse[1]; //else 7
-//               
-//               Expression ifCondition = new Expression(ifsub);
-//               Expression thenCondition = new Expression(thensub);
-//               Expression elseCondition = new Expression(elsesub);
-//               Tern tern1 = new Tern(ifCondition, thenCondition, elseCondition);
-////            }
-//            return tern1;
-//        }
 }
