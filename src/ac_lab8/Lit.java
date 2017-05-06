@@ -12,8 +12,10 @@ package ac_lab8;
 public class Lit extends Expression {
     Expression ex; //parent
     int theValue;
+    int answer;
     String value;
     String rootPrint;
+    String code;
     Lit next; //for shunting yard algorithm
     
     public Lit() {
@@ -23,11 +25,19 @@ public class Lit extends Expression {
     public Lit(String number) {
          value = number;
          theValue = Integer.parseInt(number);
+         answer = theValue;
+         code = compile(value);
     }
      
      public Lit(int number) {
          theValue = number;
-         rootPrint = Integer.toString(theValue);
+         value = Integer.toString(theValue);
+         answer = theValue;
+         code = compile(value);
     }
-
+     
+     public String compile(String number){
+         String code = "DATA " + number;
+         return code;
+     }
 }

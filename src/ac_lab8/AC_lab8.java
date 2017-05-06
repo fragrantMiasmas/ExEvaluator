@@ -53,32 +53,39 @@ public class AC_lab8 {
         
         //lab 9 portion
         String ex = "3 * 5 & 1 > 0"; //"(3*(5&(1>0)))"; = 3
-        Expression exx = new Expression(ex);
-        String exxx = "4 > 3";
+        String exx = "4 > 3";
+        String exxx = "x * x++ + 10 - x = 3";
         String lab9 = "read + 1 + 2 * 5"; //direct string output
-
         String example = "3 + x + 2 * 5 < 7"; //direct string output
-        System.out.println("lab 9 string: " + exxx);
-        ev.printTree(exxx);
-
+        String max = "a > b ? a : b";
         
-//        String ex2 = "x<4?y+2:7";
-//        ev.parseCondition(ex2);
-        
-      
-//        int x = 1;
-//        int y = 8;
-//        int xy = (x < 4) ? (y + 2) : 7;
-//        String ex2 = "(x<4)?(y+2):7";
-//        ev.parse(ex2);
+        //output
+//        System.out.println("Example 1: " + example);
+//        ev.printTree(example);
 //        System.out.println("");
-//        int a = 1;
-//        int b = 2;
-//        int max = (a > b) ? a : b;
-////        System.out.println("max = " + max);
-////        System.out.println("xy = " + xy);
+//        
+//        System.out.println("Example 2 :" + lab9);
+//        ev.printTree(lab9);
 //        
 //        System.out.println("");
+        //must be super careful with spaces in conditionals
+//        String ex2 = "x < 4 ?y + 2 :7"; 
+//        ev.parseCondition2(ex2);
+        
+        //lab 10 portion
+        Compiler cm = new Compiler();
+        String treeString = "5+2";
+//        ev.printTree(treeString);
+        Expression lit1 = new Expression(new Lit("5"));
+        Expression lit2 = new Expression(new Lit("2"));
+        Expression plus = new Expression(new Operator("+"));
+        Expression subtree = new Expression(lit1,plus,lit2);
+        Expression lit3 = new Expression(new Lit("4"));
+        Expression tree = new Expression(lit3,plus,subtree);
+        Operator o1 = new Operator(plus,lit1,lit2);
+        Expression lab10 = new Expression(o1);
+        cm.getCode(tree);
+        
 //        String grade1 = (x >= 90) ? "A"
 //        : (x >= 80) ? "B"
 //        : (x >= 70) ? "C"

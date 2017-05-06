@@ -84,7 +84,7 @@ public class Evaluator extends Expression{
                 break;
             case "<=": trueFalse = int1 <= int2;
                 break;
-            case "=": trueFalse = int1 == int2;
+            case "==": trueFalse = int1 == int2;
                 break;
             case "!=": trueFalse = int1 != int2;
                 break;
@@ -92,5 +92,10 @@ public class Evaluator extends Expression{
 //                break;
         }
         return trueFalse;        
+    }
+    
+    public String compile(){
+        String code = "";
+        return code;
     }
 }

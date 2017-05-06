@@ -18,27 +18,21 @@ public class Parser {
     Tern ternary = new Tern();
     
     public void order(){
-        opOrder.put("+", 0); //where higher values mean higher precedence
-        opOrder.put("-", 0);
-        opOrder.put("/", 1);
-        opOrder.put("*", 1);
-        opOrder.put("&", 1);
-        opOrder.put("<", 2);
-        opOrder.put(">", 2);
-        opOrder.put("<=", 2);
-        opOrder.put(">=", 2);
+        opOrder.put("=", 0); //where higher values mean higher precedence
+        opOrder.put("+", 1); 
+        opOrder.put("-", 1);
+        opOrder.put("/", 2);
+        opOrder.put("*", 2);
+        opOrder.put("&", 2);
+        opOrder.put("<", 3);
+        opOrder.put(">", 3);
+        opOrder.put("<=", 3);
+        opOrder.put(">=", 3);
     }
         
     public boolean isOperator(char i){
         return i == '=' || i == '+' || i == '-' || i == '*' || i=='&' ||i== '/' || i == '>' || i == '<';
     }    
-    
-//    public boolean isEvaluator(char i){
-//       return i== '/' || i == '>' || i == '<';
-//    }
-//    public boolean isOperator2(String i){
-//        return i == "=" || i == "+" || i == "-" || i == "*" || i== "/" || i == ">" || i == "<" || i=="&";
-//    }    
     
     public void tokenizer(Expression currEx) {
         order(); //set hashmap
@@ -75,19 +69,30 @@ public class Parser {
         for(int i = 0; i < user_input.length; i++){
             String curr = user_input[i]; 
             Expression currEx = new Expression(curr); //new expression
-            if(isOperator(curr.charAt(0)))
+            char nextChar = curr.charAt(0);
+            
+            if(isOperator(nextChar))
                 tokenizer(currEx);
-            else if(curr.charAt(0) =='r' || curr.charAt(0) =='R'){ //doesn't match strings??
+            else if(nextChar =='r' || nextChar =='R'){ //doesn't match strings??
                 Read reader = new Read();
                 currEx.answer = reader.answer;
                 Expression readin = new Expression(reader.answer);
                 argStack.add(readin);
             }
-            else{
+            else if(nextChar =='x' || nextChar =='y'){ //doesn't match strings??
+                Read reader = new Read(nextChar);
+                currEx.answer = reader.answer;
+                Expression readin = new Expression(reader.answer);
+                argStack.add(readin);
+            }
+            else if(nextChar >=48 || nextChar <= 57){ // ascii value range for ints
 //                int toInt = Integer.parseInt(currEx.wholeString);
                 Expression intEx = new Expression(Integer.parseInt(currEx.wholeString));
                 argStack.add(intEx);
-            }     
+            } 
+            else{
+                System.out.println("String contains an invalid input");
+            }
         }
         
         //when string iteration is done, subtree expressions are created
@@ -106,20 +111,28 @@ public class Parser {
         }
          System.out.println("Tree = " + sb);
     }
- 
-    public void parseCondition(String input){ //only three parts 
-        
+     
+    public void parseCondition2(String input){ //only three parts        
         //example input: "(x < 4) ? (y + 2) : 7"
         String[] component = input.split("\\:");
   
         //split (x < 4) ? (y + 2)
         String ifelseCondition = component[0];
         String[] elses = ifelseCondition.split("\\?");
-        Expression ifCondition = new Expression(elses[0]);      
-        Expression elseCondition = new Expression(elses[1]);         
-        Expression finalElse = new Expression(component[1]);
+        Expression ifCondition = new Expression(elses[0]); //(x < 4)     
+        printTree(ifCondition.wholeString);
+//        System.out.println("answer = " + ifCondition.answer);
         
+        Expression elseCondition = new Expression(elses[1]);  //y+2  
+        printTree(elseCondition.wholeString);
+//        System.out.println("answer = " + elseCondition.answer);
+        
+        Expression finalElse = new Expression(component[1]); //7
+        printTree(finalElse.wholeString);
+//        System.out.println("answer = " + finalElse.answer);
+        
+        //initialize new ternary expression
         Tern t1 = new Tern(ifCondition,elseCondition,finalElse);
-        System.out.println("Conditional: " + t1.wholeString + "=" + t1.answer);
+        System.out.println("Conditional: " + t1.wholeString + " = " + t1.answer);
     }    
 }

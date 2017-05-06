@@ -15,7 +15,9 @@ public class Set extends Expression{
     HashMap<String, Integer> hm = new HashMap<String, Integer>();
     String wholeString;
     String varName;
+    String code;
     int value;
+    int answer = value;
     
     public Set(){
         
@@ -31,12 +33,17 @@ public class Set extends Expression{
         varName = var1;
         value = l1.answer;
         hm.put(varName, value);
+        code = compile();
     }
     
     public Set(String var1, int l1){
         varName = var1;
         value = l1;
         hm.put(varName, value);
+        code = compile();
     }
-    
+    public String compile(){
+        String code = "SET " + answer;
+        return code;
+    }
 }

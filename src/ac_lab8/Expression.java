@@ -16,6 +16,7 @@ public class Expression {
     String wholeString; //the expression, can be user input
     String operation;
     String rootPrint;
+    String code; //compiler code
     Expression root;
     Expression left;
     Expression right;
@@ -49,6 +50,7 @@ public class Expression {
         answer = literal1.theValue;
         wholeString = literal1.value;
         rootPrint = literal1.value;
+        code = literal1.compile(literal1.value);
     }
 
     public Expression(Var var1) {
@@ -56,11 +58,13 @@ public class Expression {
         answer = var1.val;
         rootPrint = var1.varName;
         wholeString = var1.varName;
+        code = var1.compile();
     }
     
     public Expression(Set set1){
         answer = set1.value;
         wholeString = set1.varName + " = " + set1.value;
+        code = set1.compile();
     }
 
     public Expression(Operator op1) { //+,-,*,/
@@ -72,6 +76,7 @@ public class Expression {
         operation = op1.operation;
         wholeString = op1.wholeString;
         answer = op1.answer;
+        code = op1.code;
     }
 
     public Expression(Evaluator ev1) { //=, !=, <,> etc
@@ -83,23 +88,28 @@ public class Expression {
         operation = ev1.operation;
         wholeString = ev1.wholeString;
         answer = ev1.answer;
+        code = ev1.code;
     }
 
     public Expression(Tern t1) {
         operation = t1.operation;
         answer = t1.answer;   
         wholeString = t1.wholeString;
+        code = t1.code;
     }
 
     //add two operators with lit and var attached
-    public Expression(Operator op1, Expression ex2, Operator op3) { //concat any operators together
+    public Expression(Operator op1, Expression ex2, Operator op3) { 
 
         root = op1;
+        left = ex2;
+        right = op3;
         operation = ex2.operation;
         rootPrint = ex2.operation;
         wholeString = op1.print + ex2.operation + op3.print;
         Operator newop = new Operator(ex2, op1, op3); //debug
         answer = newop.answer;
+        code = right.code + "\n" + left.code + "\n" + newop.compile(operation);
     }
 
     public Expression(Expression ex1, Expression ex2, Expression ex3) { //concat any operators together
@@ -110,15 +120,16 @@ public class Expression {
         operation = ex2.operation;
         wholeString = "(" + ex1.wholeString + operation + ex3.wholeString + ")";
 //        wholeString = ex1.wholeString + operation + ex3.wholeString; 
-        if(operation.contentEquals(">")|| operation.contains("<")){
+        if(operation.contains(">")|| operation.contains("<")){
              Evaluator newev = new Evaluator(ex2, ex1, ex3);
             answer = newev.answer; //debug
+            code = newev.code;
         }
         else{            
-            System.out.println("operation = " + operation);
+//            System.out.println("operation = " + operation);
             Operator newop = new Operator(ex2, ex1, ex3);
             answer = newop.answer; //debug
-        }
-           
+            code = right.code + "\n" + left.code + "\n" + newop.compile(operation);
+        }  
     }
 }

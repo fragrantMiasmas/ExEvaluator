@@ -28,6 +28,7 @@ public class Tern extends Expression{
         thensub = ex2;
         elsesub = ex3;
         wholeString = ifsub.wholeString + questionMark + thensub.wholeString + colon + elsesub.wholeString;
+        
         if(ex1.answer == 1){
             answer = ex2.answer;
         }
@@ -45,5 +46,10 @@ public class Tern extends Expression{
         }
         else
             answer = cond2.answer;
+    }
+    
+    public String compile(){
+        String code = "JPIF R0," + answer;
+        return code;
     }
 }

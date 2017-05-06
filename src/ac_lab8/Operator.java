@@ -40,6 +40,7 @@ public class Operator extends Expression{
         answer = findAnswer(op.operation,ex1.answer,ex2.answer);
         print = op.operation;
         wholeString = ex1.wholeString +  op.operation + ex2.wholeString;
+        code = right.code + "\n" + left.code + "\n" + compile(operation);
     }
 
     public Operator(Expression op, Var variable1, Lit lit1){
@@ -50,6 +51,7 @@ public class Operator extends Expression{
         answer = findAnswer(op.operation, variable1.val, lit1.theValue);
         print = op.operation;
         wholeString = variable1.varName +  op + lit1.value;
+        code = right.code + "\n" + left.code + "\n" + compile(operation);
     }
     
     public Operator(Expression op, Lit lit1, Lit lit2){
@@ -60,6 +62,7 @@ public class Operator extends Expression{
         answer = findAnswer(op.operation, lit1.theValue, lit2.theValue);
         print = op.operation;
         wholeString = lit1.value +  op.operation + lit2.value;
+        code = right.code + "\n" + left.code + "\n" + compile(operation);
     }
 
     public int findAnswer(String op, int int1, int int2){
@@ -79,5 +82,24 @@ public class Operator extends Expression{
                 break;
         }
         return ans;        
+    }
+    
+    public String compile(String op){
+        String code = "";
+        switch(op){
+            case "+": code = "ADD R0,R1 ";
+                break;
+            case "-": code =  "SUB R0,R1";
+                break;
+            case "*": code = ""; //loop
+                break;
+            case "/": code = ""; //loop
+                break;
+            case "%": code = "MOD";
+                break;
+            case "&": code = "AND R0,R1";
+                break;
+        }
+        return code;        
     }
 }

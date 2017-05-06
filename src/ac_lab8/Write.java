@@ -11,28 +11,33 @@ import java.util.Scanner;
  *
  * @author ElizabethReed PC
  */
-public class Read extends Expression{
+public class Write extends Expression{
+    
     
     Scanner kb = new Scanner(System.in);
     String wholeString;
+    String code;
     int answer;
     
-    public Read(){
+    public Write(){
         System.out.println("Please enter in a decimal number: ");
         int dec = kb.nextInt();
         answer = dec;
-        wholeString = "READ =  " + dec;
+        wholeString = "WRITE =  " + dec;
+        System.out.println(wholeString);
     }
     
-    public Read(char variable){ //set x,y
+    public Write(char variable){ //set x,y
         System.out.println("Please enter in a decimal number: ");
         int dec = kb.nextInt();
         answer = dec;
         wholeString = variable + "=" + dec;
+        System.out.println(wholeString);
+        code = compile();
     }
     
     public String compile(){
-        String code = "READ R0," + answer;
+        String code = "WRITE R0," + answer;
         return code;
     }
 }
