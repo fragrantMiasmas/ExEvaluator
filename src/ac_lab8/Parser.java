@@ -61,7 +61,7 @@ public class Parser {
         }
     }
    
-     public void printTree(String str){ //expression as a string input
+         public Expression makeTree(String str){ //expression as a string input
         
         StringBuilder sb = new StringBuilder();      
         String[] user_input = str.split("\\s"); //split by spaces
@@ -104,12 +104,11 @@ public class Parser {
 //            System.out.println(subtree.answer); //for debugging
             argStack.add(subtree); 
 
-            String component = subtree.wholeString;            
-            if(opStack.isEmpty()){
-                sb.append(component + " = " + subtree.answer);
-            }
         }
-         System.out.println("Tree = " + sb);
+         Expression myTree = argStack.top;
+         System.out.println("Expression = " + myTree.wholeString + " = " + myTree.answer);
+         return myTree;
+
     }
      
     public void parseCondition2(String input){ //only three parts        
@@ -120,19 +119,19 @@ public class Parser {
         String ifelseCondition = component[0];
         String[] elses = ifelseCondition.split("\\?");
         Expression ifCondition = new Expression(elses[0]); //(x < 4)     
-        printTree(ifCondition.wholeString);
+        makeTree(ifCondition.wholeString);
 //        System.out.println("answer = " + ifCondition.answer);
         
         Expression elseCondition = new Expression(elses[1]);  //y+2  
-        printTree(elseCondition.wholeString);
+        makeTree(elseCondition.wholeString);
 //        System.out.println("answer = " + elseCondition.answer);
         
         Expression finalElse = new Expression(component[1]); //7
-        printTree(finalElse.wholeString);
+        makeTree(finalElse.wholeString);
 //        System.out.println("answer = " + finalElse.answer);
         
         //initialize new ternary expression
         Tern t1 = new Tern(ifCondition,elseCondition,finalElse);
         System.out.println("Conditional: " + t1.wholeString + " = " + t1.answer);
-    }    
+    } 
 }

@@ -61,30 +61,32 @@ public class AC_lab8 {
         
         //output
 //        System.out.println("Example 1: " + example);
-//        ev.printTree(example);
+
 //        System.out.println("");
 //        
 //        System.out.println("Example 2 :" + lab9);
-//        ev.printTree(lab9);
+
 //        
 //        System.out.println("");
         //must be super careful with spaces in conditionals
-//        String ex2 = "x < 4 ?y + 2 :7"; 
-//        ev.parseCondition2(ex2);
+        String ex2 = "x < 4 ?y + 2 :10"; 
+        ev.parseCondition2(ex2);
         
         //lab 10 portion
         Compiler cm = new Compiler();
         String treeString = "5+2";
 //        ev.printTree(treeString);
-        Expression lit1 = new Expression(new Lit("5"));
-        Expression lit2 = new Expression(new Lit("2"));
-        Expression plus = new Expression(new Operator("+"));
-        Expression subtree = new Expression(lit1,plus,lit2);
-        Expression lit3 = new Expression(new Lit("4"));
-        Expression tree = new Expression(lit3,plus,subtree);
-        Operator o1 = new Operator(plus,lit1,lit2);
-        Expression lab10 = new Expression(o1);
-        cm.getCode(tree);
+//        Expression lit1 = new Expression(new Lit("5"));
+//        Expression lit2 = new Expression(new Lit("2"));
+//        Expression plus = new Expression(new Operator("+"));
+//        Expression subtree = new Expression(lit1,plus,lit2);
+//        Expression lit3 = new Expression(new Lit("4"));
+//        Expression tree = new Expression(lit3,plus,subtree);
+//        Operator o1 = new Operator(plus,lit1,lit2);
+//        Expression lab10 = new Expression(o1);
+//        cm.getCode(tree);
+
+            ev.makeTree("3 + 6 + 2 * 5");
         
 //        String grade1 = (x >= 90) ? "A"
 //        : (x >= 80) ? "B"

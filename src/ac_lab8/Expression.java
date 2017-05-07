@@ -34,6 +34,7 @@ public class Expression {
         right = expr.right;
         wholeString = expr.left.wholeString + expr.operation + expr.right.wholeString;
         answer = expr.answer;
+        code = expr.code;
     }
 
     public Expression(String user_input) { //direct input, counts for all operators
@@ -44,13 +45,14 @@ public class Expression {
     public Expression(int user_input) { //direct input, counts for all operators
         wholeString = "" + user_input;
         answer = user_input;
+        code = "DATA " + answer;
     }
 
     public Expression(Lit literal1) {
         answer = literal1.theValue;
         wholeString = literal1.value;
         rootPrint = literal1.value;
-        code = literal1.compile(literal1.value);
+        code = literal1.code;
     }
 
     public Expression(Var var1) {
@@ -58,13 +60,13 @@ public class Expression {
         answer = var1.val;
         rootPrint = var1.varName;
         wholeString = var1.varName;
-        code = var1.compile();
+        code = var1.code;
     }
     
     public Expression(Set set1){
         answer = set1.value;
         wholeString = set1.varName + " = " + set1.value;
-        code = set1.compile();
+        code = set1.code;
     }
 
     public Expression(Operator op1) { //+,-,*,/

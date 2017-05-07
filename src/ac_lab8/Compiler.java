@@ -13,8 +13,6 @@ public class Compiler {
     
     Parser ps = new Parser();
     
-    //need stack of instructions
-    
     public Compiler(){
         
     }
