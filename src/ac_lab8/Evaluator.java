@@ -12,6 +12,7 @@ package ac_lab8;
 public class Evaluator extends Expression{
     
     String wholeString; //whole operation inlcuding var and lit and answer
+    String code;
     String rootPrint; //print center node
     String operator;
     Expression root;
@@ -41,6 +42,7 @@ public class Evaluator extends Expression{
         answer = bool2int(trueFalse);
         rootPrint = op;
         wholeString = ex1.wholeString +  op + ex2.wholeString;
+        code = lit.code + "\n" + var.code + "\n";
     }
     
     public Evaluator(Expression op, Expression ex1, Expression ex2){
@@ -52,6 +54,7 @@ public class Evaluator extends Expression{
         answer = bool2int(trueFalse);
         rootPrint = op.operation;
         wholeString = ex1.wholeString +  op + ex2.wholeString;
+        code = lit.code + "\n" + var.code + "\n";
     }
     
     public Evaluator(String op, Var variable1, Lit lit1){
@@ -62,6 +65,7 @@ public class Evaluator extends Expression{
         trueFalse = findAnswer(op, variable1.val, lit1.theValue);
         rootPrint = variable1.varName +  op + lit1.value;
         wholeString = variable1.varName +  op + lit1.value;
+        code = lit.code + "\n" + var.code + "\n";
     }
     
     public Evaluator(Expression op, Var variable1, Lit lit1){
@@ -72,6 +76,7 @@ public class Evaluator extends Expression{
         trueFalse = findAnswer(op.operation, variable1.val, lit1.theValue);
         rootPrint = variable1.varName +  op + lit1.value;
         wholeString = variable1.varName +  op + lit1.value;
+        code = right.code + "\n" + left.code + "\n";
     }
     
     public boolean findAnswer(String op, int int1, int int2){      
@@ -94,8 +99,8 @@ public class Evaluator extends Expression{
         return trueFalse;        
     }
     
-    public String compile(){
-        String code = "";
+    public String compile(String op){
+        String code = op;
         return code;
     }
 }

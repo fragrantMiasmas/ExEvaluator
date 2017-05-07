@@ -16,7 +16,8 @@ public class Condition extends Tern{
     String c = ":";
     Evaluator eval;
     int literal;
-    
+    Expression left;
+    Expression right;
     
     public Condition(String direct_input){
         
@@ -30,9 +31,14 @@ public class Condition extends Tern{
     
     public Condition(Evaluator ev1, Expression ex, Expression ex2){ //"(x < 4) ? (y + 2) : 7"
         eval = ev1;  //(x < 4)
+        answer = ev1.answer;
+        code = ex2.code + ex.code + ev1.code + "\n";
     }
     
     public Condition(Expression ev1, Expression ex, Expression ex2){ //"(x < 4) ? (y + 2) : 7"
 //        eval = ev1;  //(x < 4)
+            ex = left;
+            ex2 = right;
+            code = ex2.code + ex.code + ev1.code + "\n";
     }
 }

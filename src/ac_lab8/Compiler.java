@@ -19,6 +19,8 @@ public class Compiler {
        
     //for data and copy
     public void getCode(Expression tree){
+        System.out.println("Assembly code: ");
         System.out.println(tree.code);
+        System.out.println("WRITE DR " + tree.answer);
     }
 }

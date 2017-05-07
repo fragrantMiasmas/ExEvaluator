@@ -34,6 +34,7 @@ public class Tern extends Expression{
         }
         else
             answer = ex3.answer;
+        code = ifsub.code + thensub.code + elsesub.code + compile(ex1.operation)+ "\n";
     }
     
     public Tern(Evaluator ev1, Condition cond1, Condition cond2){
@@ -46,10 +47,11 @@ public class Tern extends Expression{
         }
         else
             answer = cond2.answer;
+        code = ifsub.code + thensub.code + elsesub.code + compile(ev1.operation)+ "\n";
     }
     
-    public String compile(){
-        String code = "JPIF R0," + answer;
+    public String compile(String cond){
+        String code = "JPIF" + cond + "J0," + answer;
         return code;
     }
 }

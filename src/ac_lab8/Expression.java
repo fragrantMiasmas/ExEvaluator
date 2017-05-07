@@ -69,6 +69,12 @@ public class Expression {
         code = set1.code;
     }
 
+    public Expression(Inc inc1) {
+        answer = inc1.answer;
+        wholeString = inc1.wholeString;
+        code = inc1.code;
+    }
+    
     public Expression(Operator op1) { //+,-,*,/
 
         root = op1;
@@ -111,7 +117,7 @@ public class Expression {
         wholeString = op1.print + ex2.operation + op3.print;
         Operator newop = new Operator(ex2, op1, op3); //debug
         answer = newop.answer;
-        code = right.code + "\n" + left.code + "\n" + newop.compile(operation);
+        code = right.code + "\n" + left.code + "\n" + newop.compile(ex2.answer, operation, op3.answer)+ "\n";
     }
 
     public Expression(Expression ex1, Expression ex2, Expression ex3) { //concat any operators together
@@ -131,7 +137,7 @@ public class Expression {
 //            System.out.println("operation = " + operation);
             Operator newop = new Operator(ex2, ex1, ex3);
             answer = newop.answer; //debug
-            code = right.code + "\n" + left.code + "\n" + newop.compile(operation);
+            code = right.code + "\n" + left.code + "\n" + newop.compile(ex1.answer, operation, ex3.answer)+ "\n";
         }  
     }
 }

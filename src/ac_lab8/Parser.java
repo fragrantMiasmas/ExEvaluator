@@ -24,6 +24,8 @@ public class Parser {
         opOrder.put("/", 2);
         opOrder.put("*", 2);
         opOrder.put("&", 2);
+        opOrder.put("++", 3);
+        opOrder.put("--", 3);
         opOrder.put("<", 3);
         opOrder.put(">", 3);
         opOrder.put("<=", 3);
@@ -33,7 +35,7 @@ public class Parser {
     public boolean isOperator(char i){
         return i == '=' || i == '+' || i == '-' || i == '*' || i=='&' ||i== '/' || i == '>' || i == '<';
     }    
-    
+   
     public void tokenizer(Expression currEx) {
         order(); //set hashmap
 
@@ -60,6 +62,33 @@ public class Parser {
 
         }
     }
+    
+     public void forInc(Expression currEx) { //for incrementing only
+        order(); //set hashmap
+
+        if (opStack.isEmpty()) {
+            opStack.add(currEx);
+        } else { //if stack is not empty
+            int current = opOrder.get(currEx.wholeString); //get operator precedence
+            String temp = opStack.top.wholeString;
+            int previous = opOrder.get(temp); //operator of prev
+
+            if (opStack.hasLeft() || current > previous) { //or has lower precedence)
+                opStack.add(currEx);
+            } else if (current < previous) { //if previous operator is higher precedence
+                Expression prev = opStack.remove();
+                prev.right = new Expression();
+                prev.left = argStack.remove();
+                Expression subtree = new Expression(prev.left, prev, prev.right);
+                argStack.add(subtree);
+                
+                opStack.add(currEx);
+            } else if (current == previous) {
+                opStack.add(currEx);
+            }
+
+        }
+    }
    
     public Expression makeTree(String str){ //expression as a string input
         
@@ -71,8 +100,12 @@ public class Parser {
             Expression currEx = new Expression(curr); //new expression
             char nextChar = curr.charAt(0);
             
-            if(isOperator(nextChar))
+            if(curr.length() == 1 && isOperator(nextChar))
                 tokenizer(currEx);
+            else if(curr.length() == 2 && isOperator(curr.charAt(1))){
+                System.out.println("incrementer here");
+                forInc(currEx);
+            }
             else if(nextChar =='r' || nextChar =='R'){ //doesn't match strings??
                 Read reader = new Read();
                 currEx.answer = reader.answer;
@@ -99,7 +132,10 @@ public class Parser {
          while(!opStack.isEmpty()){ //transfer operations to output
             Expression curr = opStack.remove();
             curr.right = argStack.remove();
-            curr.left = argStack.remove();
+            if(!argStack.isEmpty()) //usually this case
+                curr.left = argStack.remove();
+            else //for incrementers, create empty left
+                curr.left = new Expression();
             Expression subtree = new Expression(curr.left, curr,curr.right);
 //            System.out.println(subtree.answer); //for debugging
             argStack.add(subtree); 
@@ -111,7 +147,7 @@ public class Parser {
 
     }
      
-    public void parseCondition2(String input){ //only three parts        
+    public Expression parseCondition(String input){ //only three parts        
         //example input: "(x < 4) ? (y + 2) : 7"
         String[] component = input.split("\\:");
   
@@ -120,18 +156,16 @@ public class Parser {
         String[] elses = ifelseCondition.split("\\?");
         Expression ifCondition = new Expression(elses[0]); //(x < 4)     
         ifCondition = makeTree(ifCondition.wholeString);
-//        System.out.println("answer = " + ifCondition.answer);
         
         Expression elseCondition = new Expression(elses[1]);  //y+2  
         elseCondition = makeTree(elseCondition.wholeString);
-//        System.out.println("answer = " + elseCondition.answer);
         
         Expression finalElse = new Expression(component[1]); //7
         finalElse = makeTree(finalElse.wholeString);
-//        System.out.println("answer = " + finalElse.answer);
         
         //initialize new ternary expression
         Tern t1 = new Tern(ifCondition,elseCondition,finalElse);
         System.out.println("Conditional: " + t1.wholeString + " = " + t1.answer);
+        return t1;
     } 
 }

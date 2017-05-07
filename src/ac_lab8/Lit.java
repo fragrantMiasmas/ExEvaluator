@@ -37,7 +37,7 @@ public class Lit extends Expression {
     }
      
      public String compile(String number){
-         String code = "DATA " + number;
+         String code = "DATA " + number + "\n" + "COPY R1";
          return code;
      }
 }

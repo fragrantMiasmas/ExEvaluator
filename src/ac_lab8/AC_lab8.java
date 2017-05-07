@@ -54,7 +54,7 @@ public class AC_lab8 {
         //lab 9 portion
         String ex = "3 * 5 & 1 > 0"; //"(3*(5&(1>0)))"; = 3
         String exx = "4 > 3";
-        String exxx = "x * x++ + 10 - x = 3";
+//        String exxx = "x * x++ + 10 - x = 3";
         String lab9 = "read + 1 + 2 * 5"; //direct string output
         String example = "3 + x + 2 * 5 < 7"; //direct string output
         String max = "a > b ? a : b";
@@ -65,20 +65,22 @@ public class AC_lab8 {
 //        System.out.println("");
 //        
 //        System.out.println("Example 2 :" + lab9);
-
-//        
-//        System.out.println("");
+           Expression Lab99 = ev.makeTree("2 * 3 + 5 - 7");
+           
         //must be super careful with spaces in conditionals
-//        String ex2 = "x < 4 ?y + 2 :10"; 
-//        ev.parseCondition2(ex2);
-        
+        String ex2 = "x < 4 ?y + 2 :10"; 
+
         //lab 10 portion
         Compiler cm = new Compiler();
-        String treeString = "5 + 2";
+        String treeString = "x * 2";
         Expression tree = ev.makeTree(treeString);
         cm.getCode(tree);
 
-//            ev.makeTree("3 + 6 + 2 * 5");
+            Expression tree2 = ev.makeTree("3 + 6 + 2 * 5");
+            cm.getCode(tree2);
+            
+//          Expression cond =  ev.parseCondition(ex2);
+//          cm.getCode(cond);
         
 //        String grade1 = (x >= 90) ? "A"
 //        : (x >= 80) ? "B"
