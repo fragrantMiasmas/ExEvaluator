@@ -61,7 +61,7 @@ public class Parser {
         }
     }
    
-         public Expression makeTree(String str){ //expression as a string input
+    public Expression makeTree(String str){ //expression as a string input
         
         StringBuilder sb = new StringBuilder();      
         String[] user_input = str.split("\\s"); //split by spaces
@@ -119,15 +119,15 @@ public class Parser {
         String ifelseCondition = component[0];
         String[] elses = ifelseCondition.split("\\?");
         Expression ifCondition = new Expression(elses[0]); //(x < 4)     
-        makeTree(ifCondition.wholeString);
+        ifCondition = makeTree(ifCondition.wholeString);
 //        System.out.println("answer = " + ifCondition.answer);
         
         Expression elseCondition = new Expression(elses[1]);  //y+2  
-        makeTree(elseCondition.wholeString);
+        elseCondition = makeTree(elseCondition.wholeString);
 //        System.out.println("answer = " + elseCondition.answer);
         
         Expression finalElse = new Expression(component[1]); //7
-        makeTree(finalElse.wholeString);
+        finalElse = makeTree(finalElse.wholeString);
 //        System.out.println("answer = " + finalElse.answer);
         
         //initialize new ternary expression
